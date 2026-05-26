@@ -1,38 +1,35 @@
 {
-  "name": "@once-ui-system/magic-portfolio",
-  "version": "2.3.0",
+  "name": "magic-portfolio",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
-    "export": "next export",
     "build": "next build",
-    "biome-write": "npx @biomejs/biome format --write .",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@mdx-js/loader": "^3.1.0",
-    "@next/mdx": "^16.0.10",
-    "@once-ui-system/core": "latest",
-    "classnames": "^2.5.1",
-    "cookie": "^1.0.2",
-    "gray-matter": "^4.0.3",
-    "lint-staged": "^16.1.5",
-    "next": "^16.0.10",
-    "next-mdx-remote": "^6.0.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.3",
-    "react-icons": "^5.5.0",
-    "sass": "^1.86.3",
-    "transliteration": "^2.3.5"
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.0.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.2.6",
+    "lucide-react": "^0.379.0",
+    "next": "14.2.3",
+    "next-themes": "^0.4.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "simple-icons": "^11.0.0",
+    "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@types/cookie": "^0.6.0",
-    "@types/node": "^20.17.30",
-    "@types/react": "^19.2.4",
-    "@types/react-dom": "^19.2.3",
-    "eslint": "^9.25.0",
-    "typescript": "^5.8.3",
-    "tzdata": "^1.0.44"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5"
   }
 }

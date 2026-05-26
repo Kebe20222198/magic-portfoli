@@ -1,27 +1,19 @@
-import mdx from "@next/mdx";
-
-const withMDX = mdx({
-  extension: /\.mdx?$/,
-  options: {},
-});
-
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  pageExtensions: ["ts", "tsx", "md", "mdx"],
-  transpilePackages: ["next-mdx-remote"],
+  pageExtensions: ["ts", "tsx"],
+
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.google.com",
+        hostname: "images.unsplash.com",
         pathname: "**",
       },
     ],
   },
-  sassOptions: {
-    compiler: "modern",
-    silenceDeprecations: ["legacy-js-api"],
-  },
 };
 
-export default withMDX(nextConfig);
+export default nextConfig;
