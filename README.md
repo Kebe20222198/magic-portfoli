@@ -1,91 +1,104 @@
-# Magic Portfolio
+# Mohamed Kebe — Portfolio Personnel (Data Engineering & IA)
 
-Magic Portfolio is a simple, clean, beginner-friendly portfolio template. It supports an MDX-based content system for projects and blog posts, an about / CV page and a gallery.
+Ce projet est le portfolio professionnel de **Mohamed Kebe**, Élève-Ingénieur en **Data & IA Engineering** à l'**INSEA** (Rabat, Maroc). Conçu avec une esthétique haut de gamme, minimaliste et développeur-first, il intègre deux thèmes soignés (Light et Dark) inspirés de portfolios de référence.
 
-View the demo [here](https://demo.magic-portfolio.com).
+## 🔗 Liens Utiles
+- **Dépôt GitHub** : [github.com/Kebe20222198/magic-portfoli](https://github.com/Kebe20222198/magic-portfoli)
+- **E-mail de contact** : [mkebe2022@gmail.com](mailto:mkebe2022@gmail.com)
 
-![Magic Portfolio](public/images/og/home.jpg)
+---
 
-## Getting started
+## 🎨 Design & Esthétique
 
-**1. Clone the repository**
+Le design a été repensé pour allier minimalisme, technicité et élégance :
+
+- **Typographie Monospace Globale** : Utilisation uniforme de la police d'écriture **Space Mono** (Google Fonts) pour renforcer le style technique typique des profils d'ingénieurs.
+- **Light Mode Épuré** : Inspiré de *salimdiallo.com*. Un arrière-plan blanc pur épuré, rehaussé d'une fine grille de points radiale (`dot grid`) et de tons de gris et pierre neutres (neutral/stone) pour éviter toute distraction colorée.
+- **Dark Mode Bleu Nuit** : Inspiré de *alexkarpekov.com*. Une transition vers une palette bleu nuit élégante et profonde (`#0b1120` pour le fond principal, `#060b16` pour les cartes et en-têtes, et `#0d1628` pour les bordures).
+- **Animations Fluidifiées (Framer Motion)** :
+  - **Révélation Progressive de la Biographie** : Les lignes clés de la biographie se dévoilent l'une après l'autre de manière séquentielle lors du chargement de la page et restent fixes sur l'écran.
+  - **Effet de Révélation d'En-tête (`blur-reveal`)** : Le titre principal et le tag d'établissement s'animent avec un fondu et un glissement vertical associés à un léger flou artistique à l'apparition.
+  - **Menu de Sous-titres Échelonné (`staggered`)** : Les trois compétences phares sous le titre principal (Data Engineering · Architectures Distribuées · IA) s'affichent les unes après les autres.
+  - **Indicateur de Statut Pulsé** : Un voyant vert d'activité animé par effet de pulsation.
+
+---
+
+## 🛠️ Stack Technique
+
+- **Framework** : Next.js 14 (App Router)
+- **Langage** : TypeScript
+- **Styling** : Tailwind CSS (avec variables CSS locales pour les thèmes)
+- **Animations** : Framer Motion
+- **Icônes** : Lucide React & Simple Icons (pour les logos technologiques)
+- **Arrière-plans** : TsParticles (grille de points animée douce uniquement en mode sombre)
+
+---
+
+## 📂 Structure du Projet
+
+```bash
+magic-portfolio/
+├── public/                 # Médias statiques (photos de profil, logos des écoles, etc.)
+│   └── Rapports/           # Documents PDF académiques (exposés, projets)
+├── src/
+│   ├── app/                # Pages & routage Next.js App Router
+│   │   ├── resume/         # Page du CV en ligne (/resume)
+│   │   ├── globals.css     # Charte graphique CSS globale et thèmes
+│   │   └── page.tsx        # Page d'accueil (Hero, Actualités, Projets)
+│   ├── components/         # Composants React modulaires (Navbar, HeroSection, etc.)
+│   └── data/
+│       └── portfolio.ts    # Base de données centralisée du portfolio (tous les textes et liens)
+├── cv_data_engineer.md     # Curriculum Vitæ mis à jour au format Markdown pour GitHub
+└── tailwind.config.ts      # Configuration des couleurs et tokens Tailwind CSS
 ```
-git clone https://github.com/once-ui-system/magic-portfolio.git
+
+---
+
+## ⚙️ Configuration & Personnalisation
+
+Toutes les données du site sont centralisées dans un seul fichier pour faciliter la mise à jour des informations :
+
+👉 **Fichier de configuration des données** : [`src/data/portfolio.ts`](file:///d:/magic-portfolio/src/data/portfolio.ts)
+
+Pour modifier vos informations, il vous suffit d'éditer ce fichier :
+- **`personalInfo`** : Votre nom, votre rôle, votre biographie (sous forme de tableau pour la révélation progressive), vos liens sociaux et coordonnées.
+- **`news`** : Vos dernières actualités chronologiques.
+- **`projects`** : La liste de vos projets mis en avant sur la page d'accueil.
+- **`resumeData`** :
+  - `education` (Études) : Vos diplômes (INSEA, Université Chouaib Doukkali, Institution Sainte Marie) avec leurs logos.
+  - `experience` (Expériences & Projets) : Vos stages professionnels (dont le stage en tête au **HCP**) et vos projets d'ingénierie majeurs.
+  - `teaching` (Vie Associative) : Vos responsabilités associatives (ex. Trésorier ASEGUIM, membre Forum GENI).
+  - `publications` (Publications & Travaux) : Vos exposés en classe (ex. Exposé sur l'architecture des Transformers avec lien direct vers le PDF dans `public/Rapports/transformer2.pdf`).
+  - `skills` (Compétences) : Vos langages de programmation, bases de données, compétences cloud/backend et langues étrangères.
+
+---
+
+## 🚀 Démarrage Local
+
+**1. Cloner le projet**
+```bash
+git clone https://github.com/Kebe20222198/magic-portfoli.git
+cd magic-portfolio
 ```
 
-**2. Install dependencies**
-```
+**2. Installer les dépendances**
+```bash
 npm install
 ```
 
-**3. Run dev server**
-```
+**3. Lancer le serveur de développement**
+```bash
 npm run dev
 ```
+Le site sera alors accessible localement sur [http://localhost:3000](http://localhost:3000) (ou 3001 si le port est occupé).
 
-**4. Edit config**
-```
-src/resources/once-ui.config.js
-```
-
-**5. Edit content**
-```
-src/resources/content.js
+**4. Compiler pour la production**
+```bash
+npm run build
 ```
 
-**6. Create blog posts / projects**
-```
-Add a new .mdx file to src/app/blog/posts or src/app/work/projects
-```
+---
 
-Magic Portfolio was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+## 📜 Licence
 
-## Documentation
-
-Docs available at: [docs.once-ui.com](https://docs.once-ui.com/docs/magic-portfolio/quick-start)
-
-## Features
-
-### Once UI
-- All tokens, components & features of [Once UI](https://once-ui.com)
-
-### SEO
-- Automatic open-graph and X image generation with next/og
-- Automatic schema and metadata generation based on the content file
-
-### Design
-- Responsive layout optimized for all screen sizes
-- Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
-
-### Content
-- Render sections conditionally based on the content file
-- Enable or disable pages for blog, work, gallery and about / CV
-- Generate and display social links automatically
-- Set up password protection for URLs
-
-### Localization
-- A localized, earlier version of Magic Portfolio is available with the next-intl library
-- To use localization, switch to the 'i18n' branch
-
-## Creators
-
-Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
-
-## Get involved
-
-- Join the Design Engineers Club on [Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
-- Deployed your docs? Share it on the [Once UI Hub](https://once-ui.com/hub) too! We feature our favorite apps on our landing page.
-
-## License
-
-Distributed under the CC BY-NC 4.0 License.
-- Attribution is required.
-- Commercial usage is not allowed.
-- You can extend the license to [Dopler CC](https://dopler.app/license) by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
-
-See `LICENSE.txt` for more information.
-
-## Deploy with Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&project-name=portfolio&repository-name=portfolio&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-portfolio&demo-title=Magic%20Portfolio&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-portfolio.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-portfolio%2Fmain%2Fpublic%2Fimages%2Fog%2Fhome.jpg)
+Ce projet est personnel et réservé à un usage privé pour la présentation du portfolio de Mohamed Kebe. Tous droits réservés.
