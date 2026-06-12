@@ -144,7 +144,7 @@ export const news: NewsItem[] = [
     id: "1",
     date: "MAI 2026",
     status: "published",
-    description: "Lancement d'une plateforme de backtesting financier quantitatif combinant prévisions ARIMA/SARIMA et sentiment de marché (NLP via Transformers).",
+    description: "Lancement d'une plateforme de backtesting financier quantitatif combinant l'analyse de marché,  et le machine learning avec les modeles comme le randomforest , XGBoost et l'analyse des sentiments de marché (NLP via Transformers).",
     link: "#",
   },
   {
@@ -443,7 +443,6 @@ export const resumeData: ResumeData = {
       items: [
         { name: "Français", emoji: "🇫🇷" },
         { name: "Anglais", emoji: "🇬🇧" },
-        { name: "Arabe", emoji: "🇲🇦" },
       ],
     },
   ],

@@ -5,24 +5,41 @@ import { personalInfo, resumeData } from "@/data/portfolio";
 import type { SkillItem } from "@/data/portfolio";
 
 /* ─── Section Divider ─────────────────────────────────────────── */
-const SectionDivider = ({ title, colorClass }: { title: string; colorClass: string }) => (
+const SectionDivider = ({
+  title,
+  colorClass,
+}: {
+  title: string;
+  colorClass: string;
+}) => (
   <div className="flex items-center gap-6 my-14">
     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 dark:via-indigo-700/50 to-transparent" />
-    <h2 className={`text-[11px] font-extrabold tracking-[0.25em] whitespace-nowrap uppercase ${colorClass}`}>{title}</h2>
+    <h2
+      className={`text-[11px] font-extrabold tracking-[0.25em] whitespace-nowrap uppercase ${colorClass}`}
+    >
+      {title}
+    </h2>
     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 dark:via-indigo-700/50 to-transparent" />
   </div>
 );
 
 /* ─── Skill Icon ──────────────────────────────────────────────── */
 const SkillIcon = ({ item }: { item: SkillItem }) => {
-  if (item.emoji) return <span className="text-lg leading-none">{item.emoji}</span>;
+  if (item.emoji)
+    return <span className="text-lg leading-none">{item.emoji}</span>;
   if (item.lucideIcon) {
     const Icon = item.lucideIcon;
     return <Icon size={18} className="text-gray-500" />;
   }
   if (item.iconPath) {
     return (
-      <svg role="img" viewBox="0 0 24 24" fill={`#${item.hex}`} xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px]">
+      <svg
+        role="img"
+        viewBox="0 0 24 24"
+        fill={`#${item.hex}`}
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-[18px] h-[18px]"
+      >
         <path d={item.iconPath} />
       </svg>
     );
@@ -35,7 +52,6 @@ export default function ResumePage() {
   return (
     <div className="pt-36 md:pt-44 pb-20 w-full relative z-10">
       <div className="max-w-3xl mx-auto px-6">
-
         {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,13 +70,17 @@ export default function ResumePage() {
           </h1>
 
           <p className="text-lg md:text-xl mb-6 text-text-secondary dark:text-text-secondary-dark">
-            <span className="font-semibold text-stone-900 dark:text-indigo-400">Data & IA Engineering</span>
+            <span className="font-semibold text-stone-900 dark:text-indigo-400">
+              Data & IA Engineering
+            </span>
             {" · "}
             <span>INSEA, Rabat</span>
           </p>
 
-          <div className="space-y-3 text-text-secondary dark:text-text-secondary-dark leading-relaxed text-[15px] mb-8">
-            {personalInfo.bio.map((p, i) => <p key={i}>{p}</p>)}
+          <div className="space-y-3 text-text-secondary dark:text-text-secondary-dark leading-relaxed text-[15px] mb-8 text-mono">
+            {personalInfo.bio.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
 
           {/* Contact Grid */}
@@ -74,7 +94,9 @@ export default function ResumePage() {
                 </span>
               );
               return c.url ? (
-                <a key={i} href={c.url} target="_blank" rel="noreferrer">{inner}</a>
+                <a key={i} href={c.url} target="_blank" rel="noreferrer">
+                  {inner}
+                </a>
               ) : (
                 <div key={i}>{inner}</div>
               );
@@ -85,7 +107,10 @@ export default function ResumePage() {
         {/* ═══════════════════════════════════════════════════════
              EDUCATION (ÉTUDES)
            ═══════════════════════════════════════════════════════ */}
-        <SectionDivider title="Études" colorClass="text-stone-900 dark:text-indigo-400" />
+        <SectionDivider
+          title="Études"
+          colorClass="text-stone-900 dark:text-indigo-400"
+        />
 
         <div className="space-y-8">
           {resumeData.education.map((edu, idx) => (
@@ -130,7 +155,10 @@ export default function ResumePage() {
         {/* ═══════════════════════════════════════════════════════
              INDUSTRY EXPERIENCE
            ═══════════════════════════════════════════════════════ */}
-        <SectionDivider title="Expériences & Projets" colorClass="text-stone-900 dark:text-rose-400" />
+        <SectionDivider
+          title="Expériences & Projets"
+          colorClass="text-stone-900 dark:text-rose-400"
+        />
 
         <div className="space-y-12">
           {resumeData.experience.map((exp, idx) => (
@@ -142,7 +170,9 @@ export default function ResumePage() {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-2">
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">{exp.year}</span>
+                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">
+                    {exp.year}
+                  </span>
                   <div className="flex items-center gap-3">
                     {exp.logoUrl && (
                       <div className="relative w-8 h-8 rounded-lg overflow-hidden bg-white flex items-center justify-center border border-stone-200/60 p-1 shrink-0">
@@ -153,18 +183,28 @@ export default function ResumePage() {
                         />
                       </div>
                     )}
-                    <h3 className="text-base sm:text-lg font-semibold text-text-primary dark:text-text-primary-dark">{exp.company}</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-text-primary dark:text-text-primary-dark">
+                      {exp.company}
+                    </h3>
                   </div>
                 </div>
-                <span className="text-sm text-gray-400 italic pl-[72px] sm:pl-0">{exp.location}</span>
+                <span className="text-sm text-gray-400 italic pl-[72px] sm:pl-0">
+                  {exp.location}
+                </span>
               </div>
               <div className="pl-[72px]">
-                <p className="text-stone-900 dark:text-rose-400 font-semibold">{exp.role}</p>
-                <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-1.5 leading-relaxed">{exp.description}</p>
+                <p className="text-stone-900 dark:text-rose-400 font-semibold">
+                  {exp.role}
+                </p>
+                <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-1.5 leading-relaxed">
+                  {exp.description}
+                </p>
                 {exp.bullets && exp.bullets.length > 0 && (
                   <ul className="list-disc list-outside ml-4 mt-3 space-y-2 text-sm text-text-secondary dark:text-text-secondary-dark">
                     {exp.bullets.map((b, i) => (
-                      <li key={i} className="leading-relaxed">{b}</li>
+                      <li key={i} className="leading-relaxed">
+                        {b}
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -176,7 +216,10 @@ export default function ResumePage() {
         {/* ═══════════════════════════════════════════════════════
              TEACHING
            ═══════════════════════════════════════════════════════ */}
-        <SectionDivider title="Vie Associative" colorClass="text-stone-900 dark:text-emerald-400" />
+        <SectionDivider
+          title="Vie Associative"
+          colorClass="text-stone-900 dark:text-emerald-400"
+        />
 
         <div className="space-y-12">
           {resumeData.teaching.map((t, idx) => (
@@ -188,28 +231,42 @@ export default function ResumePage() {
             >
               <div className="flex items-baseline justify-between gap-4 mb-1">
                 <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">{t.year}</span>
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-text-primary-dark">{t.institution}</h3>
+                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">
+                    {t.year}
+                  </span>
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-text-primary-dark">
+                    {t.institution}
+                  </h3>
                 </div>
-                <span className="text-sm text-gray-400 italic hidden sm:block">{t.location}</span>
+                <span className="text-sm text-gray-400 italic hidden sm:block">
+                  {t.location}
+                </span>
               </div>
               <div className="pl-[72px]">
-                <p className="font-medium text-text-primary dark:text-text-primary-dark">{t.role}</p>
+                <p className="font-medium text-text-primary dark:text-text-primary-dark">
+                  {t.role}
+                </p>
                 {t.course && (
-                  <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-0.5">{t.course}</p>
+                  <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-0.5">
+                    {t.course}
+                  </p>
                 )}
                 {t.courses && t.courses.length > 0 && (
                   <ul className="list-disc list-outside ml-4 mt-2 space-y-1 text-sm">
                     {t.courses.map((c, i) => (
                       <li key={i}>
-                        <span className="font-medium text-text-primary dark:text-text-primary-dark">{c.name}</span>
+                        <span className="font-medium text-text-primary dark:text-text-primary-dark">
+                          {c.name}
+                        </span>
                         <span className="text-gray-400"> ({c.semester})</span>
                       </li>
                     ))}
                   </ul>
                 )}
                 {t.description && (
-                  <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-2 leading-relaxed">{t.description}</p>
+                  <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-2 leading-relaxed">
+                    {t.description}
+                  </p>
                 )}
                 {t.score && (
                   <p className="mt-2.5 text-sm text-text-primary dark:text-text-primary-dark flex items-start gap-2">
@@ -229,7 +286,10 @@ export default function ResumePage() {
         {/* ═══════════════════════════════════════════════════════
              PUBLICATIONS
            ═══════════════════════════════════════════════════════ */}
-        <SectionDivider title="Publications & Travaux" colorClass="text-stone-900 dark:text-purple-400" />
+        <SectionDivider
+          title="Publications & Travaux"
+          colorClass="text-stone-900 dark:text-purple-400"
+        />
 
         {resumeData.publications.length === 0 && (
           <p className="text-sm text-text-secondary dark:text-text-secondary-dark italic text-center py-4">
@@ -247,14 +307,24 @@ export default function ResumePage() {
             >
               <div className="flex items-baseline justify-between gap-4 mb-1">
                 <div className="flex items-baseline gap-4">
-                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">{pub.year}</span>
-                  <h3 className="text-lg font-semibold text-text-primary dark:text-text-primary-dark leading-snug">{pub.title}</h3>
+                  <span className="text-sm text-gray-400 dark:text-gray-500 font-medium tabular-nums w-14 shrink-0">
+                    {pub.year}
+                  </span>
+                  <h3 className="text-lg font-semibold text-text-primary dark:text-text-primary-dark leading-snug">
+                    {pub.title}
+                  </h3>
                 </div>
-                <span className="text-xs text-gray-400 italic hidden sm:block shrink-0 max-w-[200px] text-right">{pub.conference}</span>
+                <span className="text-xs text-gray-400 italic hidden sm:block shrink-0 max-w-[200px] text-right">
+                  {pub.conference}
+                </span>
               </div>
               <div className="pl-[72px]">
-                <p className="text-sm text-accent dark:text-blue-400 font-medium">{pub.authors}</p>
-                <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-1.5 leading-relaxed">{pub.description}</p>
+                <p className="text-sm text-accent dark:text-blue-400 font-medium">
+                  {pub.authors}
+                </p>
+                <p className="text-sm text-text-secondary dark:text-text-secondary-dark mt-1.5 leading-relaxed">
+                  {pub.description}
+                </p>
 
                 {pub.links.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-3">
@@ -275,7 +345,10 @@ export default function ResumePage() {
                 {pub.awards && pub.awards.length > 0 && (
                   <div className="mt-3 space-y-1">
                     {pub.awards.map((aw, i) => (
-                      <p key={i} className="text-sm text-text-primary dark:text-text-primary-dark flex items-start gap-2">
+                      <p
+                        key={i}
+                        className="text-sm text-text-primary dark:text-text-primary-dark flex items-start gap-2"
+                      >
                         <span>🏆</span> <span>{aw}</span>
                       </p>
                     ))}
@@ -289,7 +362,10 @@ export default function ResumePage() {
         {/* ═══════════════════════════════════════════════════════
              SKILLS
            ═══════════════════════════════════════════════════════ */}
-        <SectionDivider title="Compétences Techniques" colorClass="text-stone-900 dark:text-indigo-400" />
+        <SectionDivider
+          title="Compétences Techniques"
+          colorClass="text-stone-900 dark:text-indigo-400"
+        />
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-8">
           {resumeData.skills.map((cat, idx) => (
@@ -300,10 +376,15 @@ export default function ResumePage() {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.08 }}
             >
-              <h3 className="font-semibold text-sm mb-4 text-text-primary dark:text-white">{cat.category}</h3>
+              <h3 className="font-semibold text-sm mb-4 text-text-primary dark:text-white">
+                {cat.category}
+              </h3>
               <ul className="space-y-3">
                 {cat.items.map((item, j) => (
-                  <li key={j} className="flex items-center gap-2.5 text-sm text-text-secondary dark:text-text-secondary-dark">
+                  <li
+                    key={j}
+                    className="flex items-center gap-2.5 text-sm text-text-secondary dark:text-text-secondary-dark"
+                  >
                     <div className="w-5 h-5 flex items-center justify-center shrink-0">
                       <SkillIcon item={item} />
                     </div>
@@ -314,7 +395,6 @@ export default function ResumePage() {
             </motion.div>
           ))}
         </div>
-
       </div>
     </div>
   );

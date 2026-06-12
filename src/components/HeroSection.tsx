@@ -82,7 +82,10 @@ export default function HeroSection() {
   }, [visibleCount]);
 
   return (
-    <section id="about" className="pt-36 pb-24 md:pt-44 md:pb-32 flex items-center relative overflow-hidden">
+    <section
+      id="about"
+      className="pt-36 pb-24 md:pt-44 md:pb-32 flex items-center relative overflow-hidden"
+    >
       {/* Decorative blobs */}
       <div className="hidden dark:block absolute -top-32 -right-32 w-96 h-96 rounded-full bg-indigo-600/10 blur-3xl pointer-events-none" />
       <div className="hidden dark:block absolute -bottom-16 -left-16 w-72 h-72 rounded-full bg-purple-600/10 blur-3xl pointer-events-none" />
@@ -97,7 +100,6 @@ export default function HeroSection() {
         >
           {/* Top Row: Info (Left) + Photo (Right) */}
           <div className="flex flex-col-reverse md:flex-row gap-10 md:gap-14 items-start md:items-center justify-between w-full">
-
             {/* Info Column */}
             <div className="space-y-5 flex-1">
               <div className="space-y-3">
@@ -126,11 +128,27 @@ export default function HeroSection() {
                 variants={subtitleContainerVariants}
                 className="text-lg md:text-xl text-text-secondary dark:text-text-secondary-dark leading-relaxed flex flex-wrap items-center gap-x-2"
               >
-                <motion.span variants={subtitleItemVariants}>Data Engineering</motion.span>
-                <motion.span variants={subtitleItemVariants} className="text-stone-400 dark:text-stone-600 font-normal">·</motion.span>
-                <motion.span variants={subtitleItemVariants}>Architectures Distribuées</motion.span>
-                <motion.span variants={subtitleItemVariants} className="text-stone-400 dark:text-stone-600 font-normal">·</motion.span>
-                <motion.span variants={subtitleItemVariants}>Intelligence Artificielle</motion.span>
+                <motion.span variants={subtitleItemVariants}>
+                  Data Engineering
+                </motion.span>
+                <motion.span
+                  variants={subtitleItemVariants}
+                  className="text-stone-400 dark:text-stone-600 font-normal"
+                >
+                  ·
+                </motion.span>
+                <motion.span variants={subtitleItemVariants}>
+                  Architectures Distribuées
+                </motion.span>
+                <motion.span
+                  variants={subtitleItemVariants}
+                  className="text-stone-400 dark:text-stone-600 font-normal"
+                >
+                  ·
+                </motion.span>
+                <motion.span variants={subtitleItemVariants}>
+                  Intelligence Artificielle
+                </motion.span>
               </motion.p>
 
               {/* Location */}
@@ -138,12 +156,18 @@ export default function HeroSection() {
                 variants={itemVariants}
                 className="flex items-center gap-1.5 text-sm text-text-secondary dark:text-text-secondary-dark"
               >
-                <MapPin size={14} className="text-emerald-500 dark:text-indigo-400" />
+                <MapPin
+                  size={14}
+                  className="text-emerald-500 dark:text-indigo-400"
+                />
                 <span>Rabat, Maroc</span>
               </motion.div>
 
               {/* Social Icons & Resume CTA */}
-              <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 pt-1">
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-wrap items-center gap-3 pt-1"
+              >
                 {personalInfo.socialLinks.map((link) => {
                   const Icon = link.icon;
                   return (
@@ -191,7 +215,6 @@ export default function HeroSection() {
                 Open to opportunities
               </div>
             </motion.div>
-
           </div>
 
           {/* Divider */}
@@ -209,7 +232,7 @@ export default function HeroSection() {
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="leading-7 font-medium"
+                  className="leading-7 font-medium text-mono"
                 >
                   {line}
                 </motion.p>
