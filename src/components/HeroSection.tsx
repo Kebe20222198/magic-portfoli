@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { personalInfo } from "@/data/portfolio";
 import { ArrowRight, MapPin } from "lucide-react";
+import SocialLinks from "@/components/SocialLinks";
+import GradientDivider from "@/components/GradientDivider";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -168,22 +170,7 @@ export default function HeroSection() {
                 variants={itemVariants}
                 className="flex flex-wrap items-center gap-3 pt-1"
               >
-                {personalInfo.socialLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <a
-                      key={link.name}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      title={link.name}
-                      className="flex items-center justify-center w-10 h-10 rounded-xl bg-stone-100 dark:bg-indigo-500/20 text-stone-700 dark:text-indigo-300 hover:bg-stone-900 hover:text-white dark:hover:bg-indigo-500 dark:hover:text-white transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
-                      aria-label={link.name}
-                    >
-                      <Icon size={17} />
-                    </a>
-                  );
-                })}
+                <SocialLinks variant="hero" />
 
                 <Link
                   href="/resume"
@@ -218,10 +205,9 @@ export default function HeroSection() {
           </div>
 
           {/* Divider */}
-          <motion.div
-            variants={itemVariants}
-            className="h-px bg-gradient-to-r from-transparent via-stone-200 dark:via-indigo-700/40 to-transparent"
-          />
+          <motion.div variants={itemVariants}>
+            <GradientDivider />
+          </motion.div>
 
           {/* Progressive Monospace Bio Reveal */}
           <div className="text-text-secondary dark:text-text-secondary-dark text-[1.05rem] max-w-3xl border-l-2 border-stone-300 dark:border-stone-700 pl-4 py-1 space-y-3">
