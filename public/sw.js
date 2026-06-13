@@ -15,22 +15,15 @@ const API_CACHE = `api-${CACHE_VERSION}`;
 // Assets statiques à mettre en cache au premier chargement
 const STATIC_ASSETS = [
   "/",
-  "/about",
-  "/work",
-  "/blog",
-  "/gallery",
+  "/resume",
   "/favicon.ico",
 ];
 
 // Installation du Service Worker
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installation en cours...");
   event.waitUntil(
     caches.open(STATIC_CACHE).then((cache) => {
-      console.log("[SW] Cache statique créé");
-      return cache.addAll(STATIC_ASSETS).catch((error) => {
-        console.warn("[SW] Erreur lors de la mise en cache des assets statiques:", error);
-        // Ne pas arrêter l'installation si un asset échoue
+      return cache.addAll(STATIC_ASSETS).catch(() => {
         return Promise.resolve();
       });
     })
@@ -41,7 +34,6 @@ self.addEventListener("install", (event) => {
 
 // Activation du Service Worker
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activation en cours...");
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -51,7 +43,6 @@ self.addEventListener("activate", (event) => {
               cacheName !== IMAGES_CACHE &&
               cacheName !== PAGES_CACHE &&
               cacheName !== API_CACHE) {
-            console.log("[SW] Suppression du cache obsolète:", cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -93,8 +84,6 @@ self.addEventListener("fetch", (event) => {
           });
           return response;
         }).catch(() => {
-          // Fallback si pas de connexion
-          console.warn("[SW] Image non disponible (offline):", request.url);
           return new Response("Image non disponible", {
             status: 503,
             statusText: "Service Unavailable",
@@ -107,11 +96,7 @@ self.addEventListener("fetch", (event) => {
   // 2. STRATÉGIE NETWORK-FIRST pour les pages (fraîcheur prioritaire)
   if (request.destination === "document" ||
       url.pathname === "/" ||
-      url.pathname.startsWith("/blog/") ||
-      url.pathname.startsWith("/work/") ||
-      url.pathname === "/about" ||
-      url.pathname === "/work" ||
-      url.pathname === "/blog") {
+      url.pathname.startsWith("/resume")) {
     return event.respondWith(
       fetch(request)
         .then((response) => {
@@ -194,4 +179,4 @@ self.addEventListener("message", (event) => {
   }
 });
 
-console.log("[SW] Service Worker chargé avec succès");
+
