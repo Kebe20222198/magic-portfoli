@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { projects } from "@/data/portfolio";
 import { Github, Globe, Play, ExternalLink } from "lucide-react";
+import SectionHeader from "@/components/SectionHeader";
 import { useState, type SyntheticEvent } from "react";
 
 const getIcon = (label: string) => {
@@ -41,22 +42,11 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="py-24 relative z-10">
       <div className="max-w-5xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-14"
-        >
-          <p className="text-xs font-bold tracking-widest uppercase text-stone-500 dark:text-indigo-400 mb-2">
-            Portfolio
-          </p>
-          <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">
-            Projets{" "}
-            <span className="text-stone-900 dark:bg-gradient-to-r dark:from-indigo-400 dark:to-purple-400 dark:bg-clip-text dark:text-transparent">
-              sélectionnés
-            </span>
-          </h2>
-        </motion.div>
+        <SectionHeader
+          subtitle="Portfolio"
+          title="Projets"
+          highlightedTitle="sélectionnés"
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visibleProjects.map((project, idx) => (
