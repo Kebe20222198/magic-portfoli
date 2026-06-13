@@ -5,7 +5,7 @@ import Image from "next/image";
 import { projects } from "@/data/portfolio";
 import { Github, Globe, Play, ExternalLink } from "lucide-react";
 import SectionHeader from "@/components/SectionHeader";
-import { useState } from "react";
+import { useState, type SyntheticEvent } from "react";
 
 const getIcon = (label: string) => {
   const l = label.toLowerCase();
@@ -28,6 +28,12 @@ const cardAccents = [
 ];
 
 const INITIAL_VISIBLE = 6;
+
+function handleImageError(e: SyntheticEvent<HTMLImageElement>) {
+  const target = e.currentTarget;
+  target.style.display = "none";
+  console.warn(`[ProjectsSection] Failed to load image: ${target.src}`);
+}
 
 export default function ProjectsSection() {
   const [showAll, setShowAll] = useState(false);
@@ -59,6 +65,7 @@ export default function ProjectsSection() {
                   alt={project.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={handleImageError}
                 />
                 {/* Overlay gradient */}
                 <div className={`hidden dark:block absolute inset-0 bg-gradient-to-br opacity-80 ${cardAccents[idx % cardAccents.length]}`} />

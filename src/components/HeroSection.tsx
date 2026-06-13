@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +8,12 @@ import { personalInfo } from "@/data/portfolio";
 import { ArrowRight, MapPin } from "lucide-react";
 import SocialLinks from "@/components/SocialLinks";
 import GradientDivider from "@/components/GradientDivider";
+
+function handleImageError(e: SyntheticEvent<HTMLImageElement>) {
+  const target = e.currentTarget;
+  target.style.display = "none";
+  console.warn(`[HeroSection] Failed to load profile image: ${target.src}`);
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -194,6 +200,7 @@ export default function HeroSection() {
                   fill
                   className="object-cover"
                   priority
+                  onError={handleImageError}
                 />
               </div>
               {/* Floating status dot in light mode / badge in dark mode */}

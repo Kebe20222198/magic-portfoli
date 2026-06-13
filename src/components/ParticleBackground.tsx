@@ -13,9 +13,13 @@ export default function ParticleBackground() {
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
+    })
+      .then(() => {
+        setInit(true);
+      })
+      .catch((err) => {
+        console.error("[ParticleBackground] Failed to initialize particles engine:", err);
+      });
   }, []);
 
   const isDark = resolvedTheme === "dark";
