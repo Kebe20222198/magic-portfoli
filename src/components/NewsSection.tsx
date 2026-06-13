@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { news } from "@/data/portfolio";
 import { useState } from "react";
 import { ChevronDown, ExternalLink } from "lucide-react";
+import SectionHeader from "@/components/SectionHeader";
 
 const statusConfig = {
   upcoming: {
@@ -30,22 +31,11 @@ export default function NewsSection() {
   return (
     <section id="news" className="py-24 relative z-10">
       <div className="max-w-4xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-14"
-        >
-          <p className="text-xs font-bold tracking-widest uppercase text-stone-500 dark:text-indigo-400 mb-2">
-            Actualités
-          </p>
-          <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">
-            Dernières{" "}
-            <span className="text-stone-900 dark:bg-gradient-to-r dark:from-indigo-400 dark:to-purple-400 dark:bg-clip-text dark:text-transparent">
-              nouvelles
-            </span>
-          </h2>
-        </motion.div>
+        <SectionHeader
+          subtitle="Actualités"
+          title="Dernières"
+          highlightedTitle="nouvelles"
+        />
 
         <div className="relative space-y-0">
           {/* Vertical Timeline Line */}
