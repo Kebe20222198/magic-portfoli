@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, Space_Mono } from "next/font/google";
+import { Space_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,8 +7,6 @@ import ParticleBackground from "@/components/ParticleBackground";
 import BackToTop from "@/components/BackToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-jakarta" });
 const spaceMono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -49,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jakarta.variable} ${spaceMono.variable} font-mono antialiased min-h-screen`}>
+      <body className={`${spaceMono.variable} font-mono antialiased min-h-screen`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {/* Accessibility: skip to content */}
           <a href="#main-content" className="skip-to-content">
