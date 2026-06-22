@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { personalInfo, resumeData } from "@/data/portfolio";
 import type { SkillItem } from "@/data/portfolio";
+import GradientDivider from "@/components/GradientDivider";
+import { fadeInViewProps } from "@/lib/motion";
 
 /* ─── Section Divider ─────────────────────────────────────────── */
 const SectionDivider = ({
@@ -13,13 +15,13 @@ const SectionDivider = ({
   colorClass: string;
 }) => (
   <div className="flex items-center gap-6 my-14">
-    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 dark:via-indigo-700/50 to-transparent" />
+    <GradientDivider className="flex-1" />
     <h2
       className={`text-[11px] font-extrabold tracking-[0.25em] whitespace-nowrap uppercase ${colorClass}`}
     >
       {title}
     </h2>
-    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-stone-200 dark:via-indigo-700/50 to-transparent" />
+    <GradientDivider className="flex-1" />
   </div>
 );
 
@@ -116,9 +118,7 @@ export default function ResumePage() {
           {resumeData.education.map((edu, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              {...fadeInViewProps}
               className="flex items-center justify-between gap-4 w-full"
             >
               <div className="flex items-center gap-4">
@@ -164,9 +164,7 @@ export default function ResumePage() {
           {resumeData.experience.map((exp, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              {...fadeInViewProps}
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-2">
                 <div className="flex items-center gap-4">
@@ -225,9 +223,7 @@ export default function ResumePage() {
           {resumeData.teaching.map((t, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              {...fadeInViewProps}
             >
               <div className="flex items-baseline justify-between gap-4 mb-1">
                 <div className="flex items-baseline gap-4">
@@ -301,9 +297,7 @@ export default function ResumePage() {
           {resumeData.publications.map((pub, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              {...fadeInViewProps}
             >
               <div className="flex items-baseline justify-between gap-4 mb-1">
                 <div className="flex items-baseline gap-4">
