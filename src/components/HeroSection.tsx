@@ -12,9 +12,9 @@ export default function HeroSection() {
   const letters = Array.from(personalInfo.name);
 
   return (
-    <section aria-labelledby="hero-title" className="blueprint">
+    <section aria-labelledby="hero-title" className="blueprint max-sm:text-center">
       <div className="page pt-8 md:pt-12">
-        <ul className="fade-up flex flex-wrap gap-x-8 gap-y-1 font-mono text-xs text-muted" style={fade(100)}>
+        <ul className="fade-up flex flex-wrap gap-x-8 gap-y-1 font-mono text-xs text-muted max-sm:justify-center" style={fade(100)}>
           <li className="flex items-center gap-2 text-ink">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
             {personalInfo.seeking}
@@ -51,14 +51,14 @@ export default function HeroSection() {
           {personalInfo.pitch}
         </p>
         <div className="fade-up lg:col-span-4" style={fade(1000)}>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 max-sm:justify-center">
             <Link href={personalInfo.cvPage} className="btn-primary">Consulter le CV</Link>
             <a href={personalInfo.cvFile} download className="btn-secondary">
               <Download size={15} aria-hidden="true" />
               Télécharger le PDF
             </a>
           </div>
-          <SocialLinks className="mt-5" />
+          <SocialLinks className="mt-5 max-sm:justify-center" />
         </div>
         <div className="fade-up -order-1 lg:order-none lg:col-span-2 lg:flex lg:justify-end" style={fade(1100)}>
           <Image
@@ -68,7 +68,7 @@ export default function HeroSection() {
             height={430}
             priority
             sizes="128px"
-            className="portrait h-24 w-24 rounded-[3px] object-cover lg:h-32 lg:w-32"
+            className="portrait h-24 w-24 rounded-[3px] object-cover max-sm:mx-auto lg:h-32 lg:w-32"
           />
         </div>
       </div>

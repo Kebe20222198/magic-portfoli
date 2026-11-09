@@ -36,7 +36,7 @@ function Entry({ title, meta, children }: { title: string; meta?: string; childr
 export default function ResumePage() {
   return (
     <div className="mx-auto max-w-3xl px-5 py-12 sm:px-8 md:py-16 print:max-w-none print:p-0">
-      <header className="pb-8 print:pb-3">
+      <header className="pb-8 max-sm:text-center print:pb-3">
         <h1 className="font-display text-6xl font-normal leading-none print:text-3xl">{personalInfo.name}</h1>
         <p className="mt-2 font-medium">
           {personalInfo.headline} | {personalInfo.affiliation}

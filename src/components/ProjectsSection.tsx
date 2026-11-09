@@ -32,8 +32,8 @@ export default function ProjectsSection() {
               <p className="mt-5 max-w-prose text-lg leading-relaxed text-muted">{project.summary}</p>
               <ul className="mt-6 max-w-prose space-y-2 text-sm">
                 {project.highlights.map((highlight) => (
-                  <li key={highlight} className="flex gap-3">
-                    <span aria-hidden="true" className="mt-[0.6em] h-px w-4 shrink-0 bg-accent" />
+                  <li key={highlight} className="flex gap-3 max-sm:justify-center">
+                    <span aria-hidden="true" className="mt-[0.6em] h-px w-4 shrink-0 bg-accent max-sm:hidden" />
                     {highlight}
                   </li>
                 ))}

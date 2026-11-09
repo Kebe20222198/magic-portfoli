@@ -25,18 +25,19 @@ function Journey() {
       <div className="relative hidden lg:block" aria-hidden="true">
         <div className="draw-line h-px bg-ink" />
       </div>
-      <ol className="grid border-l border-ink pl-6 lg:grid-cols-5 lg:border-l-0 lg:pl-0">
+      <ol className="grid border-l border-ink pl-6 max-sm:border-l-0 max-sm:pl-0 lg:grid-cols-5 lg:border-l-0 lg:pl-0">
         {journey.map((step, index) => {
           const last = index === journey.length - 1;
           return (
-            <li key={step.place} className="relative pb-9 lg:pb-0 lg:pr-6 lg:pt-6">
+            <li key={step.place} className="relative pb-9 max-sm:pb-0 lg:pb-0 lg:pr-6 lg:pt-6">
               <span
                 aria-hidden="true"
-                className={`absolute -left-[1.84rem] top-1 h-2.5 w-2.5 rounded-full lg:-top-[5px] lg:left-0 ${last ? "bg-accent" : "bg-ink"}`}
+                className={`absolute -left-[1.84rem] top-1 h-2.5 w-2.5 rounded-full max-sm:static max-sm:mx-auto max-sm:mb-3 max-sm:block lg:-top-[5px] lg:left-0 ${last ? "bg-accent" : "bg-ink"}`}
               />
               <p className="eyebrow">{step.period}</p>
               <p className={`mt-2 font-display text-2xl leading-tight ${last ? "text-accent" : ""}`}>{step.place}</p>
               <p className="mt-2 text-sm leading-relaxed text-muted">{step.detail}</p>
+              {!last && <span aria-hidden="true" className="mx-auto my-4 block h-8 w-px bg-ink sm:hidden" />}
             </li>
           );
         })}
@@ -52,7 +53,7 @@ export function AboutSection() {
         text={manifesto}
         className="max-w-5xl font-display text-[2rem] leading-[1.15] sm:text-5xl lg:text-[3.6rem]"
       />
-      <div data-reveal className="mt-14 grid gap-x-10 gap-y-5 leading-relaxed text-muted md:grid-cols-2 lg:ml-[25%] md:mt-20">
+      <div data-reveal className="mt-14 grid gap-x-10 gap-y-5 leading-relaxed text-muted max-sm:text-left md:grid-cols-2 lg:ml-[25%] md:mt-20">
         {about.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -78,8 +79,8 @@ export function ExperienceSection() {
               <p className="text-lg">{entry.summary}</p>
               <ul className="mt-4 space-y-2 text-muted">
                 {entry.bullets.map((bullet) => (
-                  <li key={bullet} className="flex gap-3">
-                    <span aria-hidden="true" className="mt-[0.75em] h-px w-4 shrink-0 bg-accent" />
+                  <li key={bullet} className="flex gap-3 max-sm:justify-center">
+                    <span aria-hidden="true" className="mt-[0.75em] h-px w-4 shrink-0 bg-accent max-sm:hidden" />
                     {bullet}
                   </li>
                 ))}
@@ -105,7 +106,7 @@ export function FieldNotesSection() {
       </p>
       <ol className="grid gap-px bg-line lg:grid-cols-3">
         {fieldNotes.map((note, index) => (
-          <li key={note.title} data-reveal style={stagger(index)} className="flex flex-col bg-canvas p-6 sm:p-8 lg:first:pl-0 lg:last:pr-0">
+          <li key={note.title} data-reveal style={stagger(index)} className="flex flex-col bg-canvas px-0 py-8 sm:p-8 lg:first:pl-0 lg:last:pr-0">
             <Link href={`/projects/${note.projectSlug}`} className="eyebrow transition-colors hover:text-accent">
               {note.project}
             </Link>
@@ -134,10 +135,10 @@ export function SkillsSection() {
     <Section id="skills" index="05" title="Compétences">
       <ol className="border-b border-line">
         {skills.map((group, index) => (
-          <li key={group.category} data-reveal className="group flex items-start gap-5 border-t border-line py-8 sm:gap-10 md:gap-14 md:py-12">
+          <li key={group.category} data-reveal className="group flex items-start gap-5 border-t border-line py-8 max-sm:flex-col max-sm:items-center max-sm:gap-4 sm:gap-10 md:gap-14 md:py-12">
             <span
               aria-hidden="true"
-              className="w-[1.05em] shrink-0 font-display leading-[0.85] transition-colors duration-300 group-hover:text-accent"
+              className="w-[1.05em] shrink-0 font-display leading-[0.85] transition-colors duration-300 group-hover:text-accent max-sm:w-auto"
               style={{ fontSize: "clamp(3.25rem, 10vw, 8.5rem)" }}
             >
               {String(index + 1).padStart(2, "0")}
@@ -148,7 +149,7 @@ export function SkillsSection() {
                 {group.items.join(", ")} — {group.purpose}
               </p>
               {group.usedIn && (
-                <p className="mt-4 flex items-baseline gap-2 font-mono text-xs text-muted">
+                <p className="mt-4 flex items-baseline gap-2 font-mono text-xs text-muted max-sm:justify-center">
                   <span>Vu dans</span>
                   {group.usedIn.map((slug) => {
                     const projectIndex = projects.findIndex((project) => project.slug === slug);
@@ -221,13 +222,13 @@ export function OtherWorkSection() {
 
 export function ContactSection() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="stage blueprint">
+    <section id="contact" aria-labelledby="contact-title" className="stage blueprint max-sm:text-center">
       <div className="page py-24 md:py-40">
         <p data-reveal className="eyebrow">Stage PFE · Data Engineering ou AI Engineering</p>
         <h2 id="contact-title" data-reveal className="heading-xl mt-6 max-w-5xl">
           Vous cherchez un stagiaire PFE qui construit de bout en bout&nbsp;? Parlons-en.
         </h2>
-        <div data-reveal className="mt-10 flex flex-wrap items-center gap-3">
+        <div data-reveal className="mt-10 flex flex-wrap items-center gap-3 max-sm:justify-center">
           <a href={`mailto:${personalInfo.email}`} className="btn-primary">
             Écrire un email
             <ArrowRight size={15} aria-hidden="true" />

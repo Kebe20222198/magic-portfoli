@@ -110,7 +110,7 @@ function buildSections(project: Project): CaseSection[] {
     {
       id: "stack",
       title: "Stack technologique",
-      content: <p className="font-mono text-sm leading-relaxed">{project.stack.join(" · ")}</p>,
+      content: <p className="font-mono text-sm leading-relaxed max-sm:text-center">{project.stack.join(" · ")}</p>,
     },
     { id: "features", title: "Fonctionnalités principales", content: <BulletList items={project.features} /> },
     {
@@ -157,7 +157,7 @@ function buildSections(project: Project): CaseSection[] {
     id: "repository",
     title: "Dépôt GitHub",
     content: (
-      <div className="max-w-prose">
+      <div className="max-w-prose max-sm:text-center">
         {project.repository.url && (
           <a href={project.repository.url} target="_blank" rel="noopener noreferrer" className="btn-secondary">
             Voir le dépôt sur GitHub
@@ -186,7 +186,7 @@ export default function ProjectPage({ params }: PageProps) {
     <article>
       <header className="blueprint">
         <div className="page grid gap-8 pb-16 pt-10 md:pb-24 md:pt-14 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <div className="lg:col-span-8">
+          <div className="max-sm:text-center lg:col-span-8">
             <Link href="/#projects" className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink">
               <ArrowLeft size={15} aria-hidden="true" />
               Tous les projets
@@ -211,7 +211,7 @@ export default function ProjectPage({ params }: PageProps) {
         <div className="min-w-0 space-y-14 lg:col-span-9">
           {sections.map((section, sectionIndex) => (
             <section key={section.id} id={section.id} data-reveal aria-labelledby={`${section.id}-title`}>
-              <h2 id={`${section.id}-title`} className="mb-6 flex items-baseline gap-3 font-display text-4xl font-normal leading-tight">
+              <h2 id={`${section.id}-title`} className="mb-6 flex items-baseline gap-3 font-display text-4xl font-normal leading-tight max-sm:flex-col max-sm:items-center max-sm:gap-1 max-sm:text-center">
                 <span className="font-mono text-xs font-normal text-muted" aria-hidden="true">
                   {String(sectionIndex + 1).padStart(2, "0")}
                 </span>
@@ -224,7 +224,7 @@ export default function ProjectPage({ params }: PageProps) {
       </div>
 
       <nav aria-label="Projet suivant" className="border-t border-line">
-        <div className="page py-10">
+        <div className="page py-10 max-sm:text-center">
           <p className="eyebrow">Projet suivant</p>
           <Link href={`/projects/${next.slug}`} className="group mt-3 inline-flex items-center gap-3 font-display text-4xl leading-tight transition-colors hover:text-accent sm:text-5xl">
             {next.title}
