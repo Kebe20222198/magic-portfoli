@@ -18,12 +18,12 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <motion.div {...sectionViewProps} className={className ?? "mb-14"}>
-      <p className="text-xs font-bold tracking-widest uppercase text-stone-500 dark:text-indigo-400 mb-2">
+      <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-stone-500 dark:text-indigo-300 mb-3">
         {subtitle}
       </p>
-      <h2 className="text-3xl font-bold text-text-primary dark:text-text-primary-dark">
+      <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-text-primary dark:text-text-primary-dark">
         {title}{" "}
-        <span className="text-stone-900 dark:bg-gradient-to-r dark:from-indigo-400 dark:to-purple-400 dark:bg-clip-text dark:text-transparent">
+        <span className="text-indigo-700 dark:text-indigo-300">
           {highlightedTitle}
         </span>
       </h2>

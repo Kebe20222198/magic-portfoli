@@ -12,7 +12,7 @@ describe("sitemap()", () => {
     const result = sitemap();
     const home = result.find((entry) => entry.priority === 1);
     expect(home).toBeDefined();
-    expect(home!.url).toContain("example.com");
+    expect(home!.url).toContain("magic-portfolio.vercel.app");
     expect(home!.changeFrequency).toBe("monthly");
   });
 

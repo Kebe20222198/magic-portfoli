@@ -35,14 +35,14 @@ export default function ProjectsSection() {
 
   return (
     <section id="projects" className="py-24 relative z-10">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
         <SectionHeader
           subtitle="Portfolio"
           title="Projets"
           highlightedTitle="sélectionnés"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           {visibleProjects.map((project, idx) => (
             <motion.article
               key={project.id}
@@ -50,15 +50,15 @@ export default function ProjectsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
-              className="group flex flex-col bg-white dark:bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-stone-200/80 dark:border-white/10 shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:hover:shadow-xl dark:hover:shadow-indigo-900/20 transition-all duration-300 hover:-translate-y-1.5"
+              className={`group flex flex-col bg-white dark:bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-stone-200/80 dark:border-white/10 shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:hover:shadow-xl dark:hover:shadow-indigo-900/20 transition-all duration-300 hover:-translate-y-1.5 ${idx < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
             >
               {/* Cover Image */}
-              <div className="relative w-full aspect-[16/9] overflow-hidden">
+              <div className={`relative w-full overflow-hidden bg-stone-100 dark:bg-white/[0.03] ${idx < 2 ? "aspect-[2/1]" : "aspect-[16/9]"}`}>
                 <Image
                   src={project.coverImage}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className={idx < 2 ? "object-contain p-2" : "object-cover transition-transform duration-500 group-hover:scale-105"}
                 />
                 {/* Overlay gradient */}
                 <div className={`hidden dark:block absolute inset-0 bg-gradient-to-br opacity-80 ${cardAccents[idx % cardAccents.length]}`} />
@@ -66,6 +66,11 @@ export default function ProjectsSection() {
 
               {/* Content */}
               <div className="p-5 flex flex-col flex-1">
+                {idx < 2 && (
+                  <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-300">
+                    Projet majeur
+                  </span>
+                )}
                 <h3 className="text-base font-bold mb-2.5 text-text-primary dark:text-text-primary-dark leading-snug group-hover:text-stone-900 dark:group-hover:text-indigo-400 transition-colors">
                   {project.title}
                 </h3>
@@ -82,7 +87,7 @@ export default function ProjectsSection() {
                   ))}
                 </div>
 
-                <p className="text-text-secondary dark:text-text-secondary-dark text-xs leading-relaxed mb-5 line-clamp-3 flex-1">
+                <p className={`text-text-secondary dark:text-text-secondary-dark leading-relaxed mb-5 flex-1 ${idx < 2 ? "text-sm line-clamp-6" : "text-xs line-clamp-3"}`}>
                   {project.description}
                 </p>
 

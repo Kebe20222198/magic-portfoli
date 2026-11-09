@@ -361,29 +361,40 @@ export default function ResumePage() {
           colorClass="text-stone-900 dark:text-indigo-400"
         />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-x-6 gap-y-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {resumeData.skills.map((cat, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
+              initial={{ opacity: 0, y: 22, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.45, delay: idx * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -3 }}
+              className="rounded-2xl border border-stone-200/80 bg-white/80 p-5 shadow-sm transition-colors dark:border-white/10 dark:bg-white/[0.035] sm:p-6"
             >
-              <h3 className="font-semibold text-sm mb-4 text-text-primary dark:text-white">
-                {cat.category}
-              </h3>
-              <ul className="space-y-3">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h3 className="font-semibold text-sm text-text-primary dark:text-white">
+                  {cat.category}
+                </h3>
+                <span className="text-[10px] font-bold tabular-nums tracking-widest text-stone-400 dark:text-indigo-300/60">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <ul className="flex flex-wrap gap-2">
                 {cat.items.map((item, j) => (
-                  <li
+                  <motion.li
                     key={j}
-                    className="flex items-center gap-2.5 text-sm text-text-secondary dark:text-text-secondary-dark"
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.07 + j * 0.035 }}
+                    className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-stone-200/80 bg-stone-50/80 px-2.5 py-1.5 text-xs text-text-secondary transition-colors hover:border-indigo-300 hover:bg-indigo-50/70 dark:border-white/10 dark:bg-white/[0.035] dark:text-text-secondary-dark dark:hover:border-indigo-500/40 dark:hover:bg-indigo-500/10 sm:text-sm"
                   >
-                    <div className="w-5 h-5 flex items-center justify-center shrink-0">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center [&>svg]:h-4 [&>svg]:w-4 [&>span]:text-sm">
                       <SkillIcon item={item} />
-                    </div>
+                    </span>
                     <span>{item.name}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>

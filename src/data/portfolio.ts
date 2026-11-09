@@ -125,7 +125,7 @@ export const personalInfo: PersonalInfo = {
   contactGrid: [
     { icon: Mail, text: "mkebe2022@gmail.com", url: "mailto:mkebe2022@gmail.com" },
     { icon: Globe, text: "Rabat, Maroc" },
-    { icon: FileText, text: "CV / Resume", url: "#" },
+    { icon: FileText, text: "CV / Resume", url: "/resume" },
     { icon: Github, text: "github.com/Kebe20222198", url: "https://github.com/Kebe20222198" },
     { icon: Linkedin, text: "linkedin.com/in/mohamed-kebe", url: "https://www.linkedin.com/in/mohamed-kebe-1b79b1280/" },
   ],
@@ -133,6 +133,20 @@ export const personalInfo: PersonalInfo = {
 
 // ─── News ─────────────────────────────────────────────────────────────────────
 export const news: NewsItem[] = [
+  {
+    id: "news-nyc-taxi-platform",
+    date: "2026",
+    status: "published",
+    description: "Conception d'une plateforme Lakehouse pour analyser jusqu'à 40 millions de courses Yellow Taxi par an : pipeline Spark orchestré par Airflow, qualité des données, Delta Lake et modèles analytiques dbt.",
+    link: "https://github.com/Kebe20222198/taxi-data-platform",
+  },
+  {
+    id: "news-ceg",
+    date: "2026",
+    status: "published",
+    description: "Conception de CEG, un framework agnostique qui transforme une déclaration d'objectif, de contraintes et de sous-tâches en graphe agentique. Le Runtime Decision Engine choisit un modèle par étape ; un même plan fonctionne sur LangGraph, CrewAI ou Python. Le CLI, l'API FastAPI et le Studio React permettent de valider, visualiser et tracer les workflows. Les démos actuelles utilisent des exécuteurs simulés, avec un point d'extension prévu pour les fournisseurs LLM.",
+    link: "https://github.com/Kebe20222198/CEG",
+  },
   {
     id: "news-transformer",
     date: "MAI 2026",
@@ -144,29 +158,27 @@ export const news: NewsItem[] = [
     id: "1",
     date: "MAI 2026",
     status: "published",
-    description: "Lancement d'une plateforme de backtesting financier quantitatif combinant l'analyse de marché,  et le machine learning avec les modeles comme le randomforest , XGBoost et l'analyse des sentiments de marché (NLP via Transformers).",
-    link: "#",
+    description: "Développement d'une plateforme de backtesting quantitatif combinant des modèles de prévision, du machine learning et l'analyse NLP du sentiment des actualités financières.",
   },
   {
     id: "2",
     date: "MAI 2026",
     status: "published",
-    description: "Déploiement d'un assistant RAG de niveau production optimisé avec Qdrant Vector DB et Cohere Reranker.",
-    link: "#",
+    description: "Développement d'un assistant RAG qui recherche dans les documents de l'utilisateur avec retrieval hybride, reranking et génération par LLM. Chaque réponse est accompagnée de ses sources pour rester vérifiable.",
+    link: "https://github.com/Kebe20222198/assistant-chatbot-support-client",
   },
   {
     id: "3",
     date: "AVRIL 2026",
     status: "published",
-    description: "Architecture et livraison d'un système ERP modulaire de gestion de cabinet médical conteneurisé (Docker, PHP, MySQL).",
-    link: "#",
+    description: "Conception d'un ERP multi-entités pour les secteurs cosmétique et agroalimentaire : finance, actifs, stocks, production, ventes et livraisons, avec traçabilité stricte et séparation des responsabilités.",
+    link: "https://github.com/Kebe20222198/Dio",
   },
   {
     id: "4",
     date: "FÉV 2026",
-    status: "upcoming",
+    status: "published",
     description: "Co-fondation de Wonkhaï — super-app (mobilité, marketplace, fintech) pilotée par une architecture de microservices événementiels.",
-    link: "#",
   },
   {
     id: "5",
@@ -183,6 +195,24 @@ export const news: NewsItem[] = [
 // ─── Projects ─────────────────────────────────────────────────────────────────
 export const projects: Project[] = [
   {
+    id: "proj-nyc-taxi-platform",
+    title: "NYC Yellow Taxi — Data Lakehouse",
+    coverImage: "/images/projects/nyc-taxi-lakehouse.png",
+    badges: ["Data Engineering", "Spark · Airflow · dbt", "Delta Lake · MinIO"],
+    description:
+      "Plateforme analytique de bout en bout pour les données Yellow Taxi de New York, conçue pour un volume annuel de 35 à 40 millions de courses. Pipeline idempotent en architecture médaillon, contrôles qualité avec quarantaine, modélisation dimensionnelle et suivi des exécutions.",
+    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/taxi-data-platform" }],
+  },
+  {
+    id: "proj-ceg",
+    title: "CEG — Cognitive Execution Graph",
+    coverImage: "/images/projects/cognitive-execution-graph.png",
+    badges: ["Agentic AI Framework", "LangGraph · CrewAI · Python", "FastAPI · React Studio"],
+    description:
+      "CEG est un framework agnostique pour déclarer l'objectif métier, les sous-tâches, les outils autorisés et les contraintes d'un workflow agentique. Son planificateur compile cette déclaration en graphe ; son Runtime Decision Engine choisit les modèles par étape selon coût, latence et qualité. Le même plan s'exécute avec LangGraph, CrewAI ou Python. CLI, API FastAPI et Studio React fournissent validation, visualisation du graphe et traces. Le prototype utilise aujourd'hui des exécuteurs déterministes simulés, avec un point d'extension prévu pour les fournisseurs LLM.",
+    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/CEG" }],
+  },
+  {
     id: "proj-1",
     title: "Wonkhaï — Super-App Platform",
     coverImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
@@ -193,11 +223,11 @@ export const projects: Project[] = [
   },
   {
     id: "proj-2",
-    title: "Chatbot RAG — Support Client",
+    title: "Assistant documentaire RAG — Support Client",
     coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
-    badges: ["Mai 2026", "Production-ready"],
+    badges: ["RAG hybride", "Reranking", "Réponses sourcées"],
     description:
-      "Assistant conversationnel de niveau production basé sur une architecture Retrieval-Augmented Generation (RAG). Implémentation du pipeline de traitement textuel (chunking, vectorisation et indexation sous Qdrant Vector DB) et optimisation des requêtes via FastAPI et Cohere Reranker.",
+      "Assistant de support qui répond à partir des documents fournis : récupération hybride, reranking et génération LLM avec sources traçables pour vérifier chaque réponse.",
     links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/assistant-chatbot-support-client" }],
   },
   {
@@ -207,16 +237,16 @@ export const projects: Project[] = [
     badges: ["Mai 2026", "ML & NLP"],
     description:
       "Environnement de simulation quantitative et d'évaluation de portefeuilles financiers. Intégration de modèles de séries temporelles ARIMA/SARIMA pour la modélisation prédictive et d'architectures Transformers NLP pour l'évaluation en temps réel du sentiment des flux d'actualités financières.",
-    links: [{ label: "GitHub", url: "#" }],
+    links: [],
   },
   {
     id: "proj-4",
-    title: "Expense Tracker — Application Full-Stack",
+    title: "Expense Tracker — Suivi des dépenses",
     coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop",
-    badges: ["Jan 2026", "Mobile & API"],
+    badges: ["Full-stack", "Express · Neon", "Rate limiting · Upstash"],
     description:
-      "Application mobile de gestion financière personnelle. Développement du backend Node.js/Express sécurisé par Clerk, avec implémentation de requêtes analytiques complexes sous PostgreSQL pour l'agrégation et la visualisation des flux budgétaires.",
-    links: [{ label: "GitHub", url: "#" }],
+      "Application de suivi des dépenses avec API Express, stockage PostgreSQL serverless via Neon et limitation des requêtes avec Upstash Redis pour protéger les endpoints.",
+    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/Expense-Tracker" }],
   },
   {
     id: "proj-5",
@@ -225,16 +255,16 @@ export const projects: Project[] = [
     badges: ["Déc 2025", "C & GTK3"],
     description:
       "Moteur de validation syntaxique développé en C. Modélisation mathématique et implémentation de graphes sous forme de listes d'adjacence pour simuler, parser et minimiser des automates finis déterministes et non déterministes (DFA/NFA) avec interface graphique GTK3.",
-    links: [{ label: "GitHub", url: "#" }],
+    links: [],
   },
   {
     id: "proj-6",
-    title: "Système de Gestion de Cabinet Médical",
-    coverImage: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=400&fit=crop",
-    badges: ["Avril 2026", "Lead Developer"],
+    title: "Dio ERP — Industrie & Production",
+    coverImage: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=800&h=400&fit=crop",
+    badges: ["React · Spring Boot", "PostgreSQL", "ERP multi-entités"],
     description:
-      "Système d'information médical structuré en monolithe modulaire. Automatisation complète du suivi clinique, du dossier médical et du cycle de prise de rendez-vous sous MySQL, avec conteneurisation et déploiement local via Docker Compose.",
-    links: [{ label: "GitHub", url: "#" }],
+      "ERP modulaire destiné aux activités cosmétiques et agroalimentaires, couvrant finance, actifs, stocks, production, ventes, livraisons et tâches avec séparation des responsabilités et traçabilité multi-entités.",
+    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/Dio" }],
   },
   {
     id: "proj-7",
@@ -243,7 +273,7 @@ export const projects: Project[] = [
     badges: ["Avril 2026", "Analyse & UML"],
     description:
       "Rétro-ingénierie et modélisation logicielle d'une plateforme gouvernementale de documents administratifs. Application du processus unifié 2TUP (Two-Track Unified Process) et spécification rigoureuse de l'architecture cible via diagrammes UML.",
-    links: [{ label: "GitHub", url: "#" }],
+    links: [],
   },
   {
     id: "proj-8",
@@ -252,7 +282,7 @@ export const projects: Project[] = [
     badges: ["2026", "Projet IoT"],
     description:
       "Système embarqué IoT de monitoring de serres agricoles. Acquisition de métriques environnementales multiples, traitement embarqué temps réel sur microcontrôleur et dashboard de supervision réactif pour l'aide à la décision.",
-    links: [{ label: "GitHub", url: "#" }],
+    links: [],
   },
 ];
 
@@ -298,6 +328,31 @@ export const resumeData: ResumeData = {
       logoUrl: "/images/hcp-logo.png",
     },
     {
+      role: "Data Engineer — NYC Yellow Taxi Lakehouse",
+      company: "Projet personnel",
+      location: "Rabat, Maroc",
+      year: "2026",
+      description:
+        "Conception d'un pipeline analytique pour les données NYC Yellow Taxi, de l'ingestion jusqu'aux marts décisionnels.",
+      bullets: [
+        "Orchestration des traitements Spark avec Airflow et stockage en architecture médaillon sur MinIO et Delta Lake.",
+        "Ajout de contrôles de qualité, d'une zone de quarantaine et de transformations dbt pour le modèle analytique.",
+      ],
+    },
+    {
+      role: "Concepteur — Cognitive Execution Graph (CEG)",
+      company: "Projet personnel",
+      location: "Rabat, Maroc",
+      year: "2026",
+      description:
+        "Création d'un framework déclaratif et agnostique pour planifier et exécuter des workflows agentiques sous contraintes.",
+      bullets: [
+        "Planification d'objectifs et de sous-tâches sous forme de graphes, avec choix de modèle selon coût, latence et qualité.",
+        "Support de backends LangGraph, CrewAI et Python, avec CLI, API FastAPI et Studio React pour visualiser et tracer les exécutions.",
+        "Les démonstrations actuelles s'appuient sur des exécuteurs simulés ; les fournisseurs LLM se branchent via l'interface Executor.",
+      ],
+    },
+    {
       role: "Co-Founder & Lead Architect",
       company: "Wonkhaï — Super-App Platform",
       location: "Rabat, Maroc",
@@ -311,16 +366,15 @@ export const resumeData: ResumeData = {
       ],
     },
     {
-      role: "Développeur — Chatbot RAG",
+      role: "Développeur — Assistant RAG",
       company: "Projet Personnel",
       location: "Remote",
       year: "Mai 2026",
       description:
-        "Conception et mise en production d'une infrastructure d'IA générative contextuelle RAG (Retrieval-Augmented Generation).",
+        "Développement d'un assistant documentaire RAG combinant recherche hybride, reranking et génération de réponses avec sources vérifiables.",
       bullets: [
-        "Développement de pipelines ETL textuels complexes : segmentation, vectorisation d'embeddings et indexation sous Qdrant Vector DB.",
-        "Optimisation de la recherche sémantique hybride par l'intégration d'un modèle de classement (Cohere Reranker).",
-        "Exposition de services asynchrones via FastAPI avec inférence à très faible latence sur l'infrastructure Groq.",
+        "Mise en place d'une récupération hybride des passages documentaires et d'une étape de reranking avant génération.",
+        "Production de réponses sourcées afin de permettre à l'utilisateur de vérifier les informations récupérées.",
       ],
     },
     {
@@ -338,14 +392,13 @@ export const resumeData: ResumeData = {
     },
     {
       role: "Lead Developer",
-      company: "Système de Gestion de Cabinet Médical",
+      company: "Dio ERP — Industrie cosmétique & agroalimentaire",
       location: "INSEA, Rabat",
       year: "Avril 2026",
       description:
-        "Conception et déploiement d'un progiciel modulaire de gestion clinique et de dossiers patients.",
+        "Conception d'un ERP multi-entités couvrant les opérations financières, les stocks, la production, les ventes et les livraisons.",
       bullets: [
-        "Modélisation du schéma conceptuel global et écriture de procédures stockées optimisées sous MySQL.",
-        "Conteneurisation et automatisation de l'environnement de déploiement multi-conteneurs via Docker Compose.",
+        "Structuration des modules métier avec traçabilité des opérations et séparation des responsabilités.",
       ],
     },
   ],
