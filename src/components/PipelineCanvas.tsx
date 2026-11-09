@@ -6,12 +6,12 @@ import { useEffect, useRef } from "react";
 const REJECT_EVERY = 154;
 const GATES = [0.15, 0.34, 0.53];
 const GRAPH_START = 0.66;
-const GRAPH_END = 0.97;
+const GRAPH_END = 0.99;
 const SPEED = 0.115;
 const MAX_PILE = 26;
 
 const STAGE_LABELS = [
-  { name: "Ingestion", left: 0.02 },
+  { name: "Ingestion", left: 0 },
   { name: "Bronze", left: GATES[0] },
   { name: "Silver", left: GATES[1] },
   { name: "Gold", left: GATES[2] },
@@ -19,11 +19,11 @@ const STAGE_LABELS = [
 ];
 
 const NODES = [
-  { x: 0.02, y: 0.5 },
-  { x: 0.38, y: 0.24 },
-  { x: 0.38, y: 0.76 },
-  { x: 0.78, y: 0.24 },
-  { x: 0.78, y: 0.82 },
+  { x: 0, y: 0.5 },
+  { x: 0.5, y: 0.24 },
+  { x: 0.5, y: 0.76 },
+  { x: 1, y: 0.24 },
+  { x: 1, y: 0.82 },
 ];
 
 /** Same shape as the CEG ticket-triage plan. The last edge is conditional. */
@@ -178,7 +178,8 @@ export default function PipelineCanvas() {
         const y = record.y * height;
         if (record.falling) continue;
         const refined = record.x >= GATES[2];
-        ctx.fillStyle = color("ink", record.x < GATES[1] ? 0.42 : refined ? 1 : 0.72);
+        const entering = clamp(record.x / 0.03, 0, 1);
+        ctx.fillStyle = color("ink", (record.x < GATES[1] ? 0.42 : refined ? 1 : 0.72) * entering);
         ctx.beginPath();
         ctx.arc(x, y, refined ? 1.7 : 1.3, 0, Math.PI * 2);
         ctx.fill();
@@ -200,7 +201,7 @@ export default function PipelineCanvas() {
       }
 
       const graphX = GRAPH_START * width;
-      const graphW = (GRAPH_END - GRAPH_START) * width;
+      const graphW = Math.min(GRAPH_END * width, width - 14) - graphX; // Keeps edge nodes on screen.
       const point = (index: number) => ({
         x: graphX + NODES[index].x * graphW,
         y: 28 + NODES[index].y * (height - 56),
@@ -310,7 +311,9 @@ export default function PipelineCanvas() {
 
   return (
     <figure className="no-print fade-up" style={{ ["--d" as string]: "650ms" }}>
-      <div className="relative h-52 border-y border-line sm:h-64">
+      <div className="border-y border-line">
+        <div className="page max-sm:px-0">
+          <div className="relative h-52 sm:h-64">
         <canvas
           ref={canvasRef}
           role="img"
@@ -332,6 +335,8 @@ export default function PipelineCanvas() {
         >
           Quarantaine
         </span>
+          </div>
+        </div>
       </div>
       <figcaption className="page mt-3 flex flex-col gap-1 font-mono text-[11px] text-muted sm:flex-row sm:justify-between sm:gap-6">
         <span>Simulation visuelle, au taux de rejet réel du pipeline : 1 enregistrement sur 154, soit 0,65 %.</span>
