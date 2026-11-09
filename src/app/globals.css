@@ -3,121 +3,301 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-        scroll-behavior: smooth;
-    }
+  :root {
+    --canvas: 244 241 234;
+    --surface: 251 249 244;
+    --ink: 19 19 19;
+    --muted: 93 90 84;
+    --line: 216 211 200;
+    --accent: 196 66 26;
+    --warn: 196 66 26;
+    color-scheme: light;
+  }
 
-    /* Calm neutral canvas shared across the portfolio. */
-    body {
-        background-color: #faf9f6;
-        background-image: radial-gradient(rgba(24, 24, 27, 0.035) 0.7px, transparent 0.7px);
-        background-size: 22px 22px;
-        @apply text-text-primary transition-colors duration-300;
-    }
+  .dark,
+  .stage {
+    --canvas: 11 12 14;
+    --surface: 21 23 26;
+    --ink: 242 240 234;
+    --muted: 160 161 162;
+    --line: 44 46 50;
+    --accent: 255 107 53;
+    --warn: 255 107 53;
+    color-scheme: dark;
+  }
 
-    /* ── Dark mode ── */
-    .dark body {
-        background-color: #111214;
-        background-image:
-            radial-gradient(
-                ellipse 80% 50% at 20% 0%,
-                rgba(99, 102, 241, 0.055) 0%,
-                transparent 60%
-            ),
-            radial-gradient(
-                ellipse 60% 40% at 80% 100%,
-                rgba(99, 102, 241, 0.035) 0%,
-                transparent 60%
-            );
-        @apply text-text-primary-dark;
-    }
+  .stage {
+    background-color: rgb(var(--canvas));
+    color: rgb(var(--ink));
+  }
 
-    /* ── Custom Scrollbar ── */
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-        @apply bg-indigo-300/50 dark:bg-indigo-700/50 rounded-full;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-indigo-400/70 dark:bg-indigo-600/70;
-    }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
 
-    /* ── Skip to content ── */
-    .skip-to-content {
-        @apply absolute -top-full left-4 z-[100] bg-indigo-600 text-white px-4 py-2 rounded-b-lg font-medium text-sm transition-all;
-    }
-    .skip-to-content:focus {
-        @apply top-0;
-    }
+  body {
+    @apply bg-canvas text-ink;
+  }
 
-    /* ── Focus ring ── */
-    *:focus-visible {
-        @apply outline-2 outline-offset-2 outline-indigo-500 dark:outline-indigo-400;
-    }
+  ::selection {
+    @apply bg-accent text-canvas;
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline outline-2 outline-offset-2 outline-accent;
+  }
 }
 
-/* ── Monospace ── */
-.text-mono {
-    @apply font-mono;
+@layer components {
+  .page {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.08em] text-muted;
+  }
+
+  .link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    transition: background-size 0.35s ease, color 0.2s ease;
+  }
+
+  .link:hover {
+    background-size: 0 1px;
+    background-position: 100% 100%;
+    color: rgb(var(--accent));
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-[3px] border px-5 text-sm font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply btn border-ink bg-ink text-canvas hover:border-accent hover:bg-accent;
+  }
+
+  .btn-secondary {
+    @apply btn border-line text-ink hover:border-ink;
+  }
+
+  .skip-link {
+    @apply absolute left-4 top-0 z-[100] -translate-y-full bg-ink px-4 py-2 text-sm text-canvas transition-transform focus:translate-y-0;
+  }
+
+  .heading-xl {
+    @apply font-display font-normal leading-[0.98] tracking-[-0.015em];
+    font-size: clamp(2.9rem, 7.4vw, 6.25rem);
+  }
+
+  .blueprint {
+    background-image: linear-gradient(rgb(var(--line) / 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.35) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
 }
 
-/* ── Selection ── */
-::selection {
-    @apply bg-stone-200 text-stone-900 dark:bg-indigo-800/60 dark:text-white;
+/* Scroll reveal. Hidden only once JS has announced itself, so content never depends on it. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
 }
 
-/* ── Gradient text ── */
-.gradient-text {
-    @apply text-indigo-700 dark:text-indigo-300;
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero name: letters rise from behind a mask. */
+.rise {
+  display: inline-block;
+  animation: rise 1s cubic-bezier(0.16, 0.84, 0.28, 1) both;
+  animation-delay: calc(120ms + var(--i) * 38ms);
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* A packet travelling along any SVG path that sets pathLength="100". */
+.trace {
+  fill: none;
+  stroke: rgb(var(--accent));
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0.5 99.5;
+  animation: trace var(--t, 3.2s) linear infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes trace {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.window-test {
+  animation: window-test 5s steps(1, end) infinite;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes window-test {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  1%,
+  20% {
+    opacity: 1;
+  }
+  21% {
+    opacity: 0.25;
+  }
+}
+
+/* A dot running along the top of a pipeline diagram. */
+.rail {
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+  background: rgb(var(--line));
+}
+
+.rail::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 56px;
+  background: rgb(var(--accent));
+  animation: rail 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes rail {
+  from {
+    transform: translateX(-60px);
+  }
+  to {
+    transform: translateX(100vw);
+  }
+}
+
+.draw-line {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.is-visible .draw-line,
+html:not(.js) .draw-line {
+  transform: scaleX(1);
+}
+
+.portrait {
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+
+.portrait:hover {
+  filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .draw-line {
+    transform: scaleX(1);
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* ── Premium card light ── */
-.glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.02),
-        0 4px 20px rgba(0, 0, 0, 0.03);
-}
-.dark .glass-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: none;
-}
-
-/* ── Print ── */
 @media print {
-    body {
-        background: white !important;
-        color: black !important;
-    }
-    .no-print,
-    nav,
-    #tsparticles,
-    .skip-to-content {
-        display: none !important;
-    }
-    a {
-        text-decoration: underline;
-        color: inherit !important;
-    }
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
+  @page {
+    size: A4;
+    margin: 13mm 14mm;
+  }
+
+  :root,
+  .dark,
+  .stage {
+    --canvas: 255 255 255;
+    --surface: 255 255 255;
+    --ink: 0 0 0;
+    --muted: 60 60 60;
+    --line: 205 205 205;
+    --accent: 0 0 0;
+    --warn: 0 0 0;
+  }
+
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+
+  body {
+    font-size: 10.5pt;
+  }
 }

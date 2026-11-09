@@ -1,57 +1,25 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ResumePage from "@/app/resume/page";
-
-vi.mock("framer-motion", () => ({
-  motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <div className={className}>{children}</div>;
-    },
-    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <p className={className}>{children}</p>;
-    },
-  },
-}));
+import { personalInfo } from "@/data/portfolio";
 
 describe("ResumePage", () => {
-  it("renders the Curriculum Vitæ label", () => {
+  it("renders the name and the positioning", () => {
     render(<ResumePage />);
-    expect(screen.getByText("Curriculum Vitæ")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: personalInfo.name })).toBeInTheDocument();
+    expect(screen.getByText(/Data Engineer & AI Engineer \| Engineering Student at INSEA/)).toBeInTheDocument();
   });
 
-  it("renders the owner's name split into first + last", () => {
+  it("offers the PDF download", () => {
     render(<ResumePage />);
-    expect(screen.getByText("Mohamed")).toBeInTheDocument();
-    expect(screen.getByText("Kebe")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Télécharger le PDF/ })).toHaveAttribute("href", personalInfo.cvFile);
   });
 
-  it("renders education section", () => {
-    render(<ResumePage />);
-    expect(screen.getByText("Études")).toBeInTheDocument();
-  });
-
-  it("renders experience section", () => {
-    render(<ResumePage />);
-    expect(screen.getByText(/expériences/i)).toBeInTheDocument();
-  });
-
-  it("renders skills section", () => {
-    render(<ResumePage />);
-    expect(screen.getByText(/compétences/i)).toBeInTheDocument();
-  });
-
-  it("renders contact grid entries", () => {
-    render(<ResumePage />);
-    expect(screen.getByText("mkebe2022@gmail.com")).toBeInTheDocument();
-    expect(screen.getAllByText("Rabat, Maroc").length).toBeGreaterThanOrEqual(1);
-  });
-
-  it("renders bio paragraphs", () => {
-    render(<ResumePage />);
-    expect(
-      screen.getByText(/Élève-Ingénieur en Data & IA Engineering/),
-    ).toBeInTheDocument();
-  });
+  it.each(["Expériences", "Projets principaux", "Compétences", "Formation", "Autres réalisations", "Engagement associatif"])(
+    "renders the %s section",
+    (name) => {
+      render(<ResumePage />);
+      expect(screen.getByRole("heading", { level: 2, name })).toBeInTheDocument();
+    },
+  );
 });

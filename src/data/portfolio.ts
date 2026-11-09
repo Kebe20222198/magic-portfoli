@@ -1,502 +1,293 @@
-import { Github, Linkedin, Mail, Database, Server, Layers, FileText, Globe, Cpu, Box } from "lucide-react";
-import {
-  siPython, siC, siRust, siElixir,
-  siPostgresql, siMysql, siMongodb, siRedis, siDocker,
-  siReact, siNodedotjs, siFastapi, siApacheairflow,
-  siNumpy, siPandas, siStreamlit,
-  siHtml5,
-} from "simple-icons";
+/** Identity, career and skills content. Project case studies live in ./projects. */
 
-export interface SocialLink {
-  name: string;
-  url: string;
-  icon: any;
-}
-
-export interface PersonalInfo {
-  name: string;
+export interface ExperienceEntry {
+  company: string;
   role: string;
-  bio: string[];
-  photoUrls: [string, string];
-  socialLinks: SocialLink[];
-  contactGrid: { icon: any; text: string; url?: string }[];
-}
-
-export interface NewsItem {
-  id: string;
-  date: string;
-  status?: "upcoming" | "published" | "award";
-  description: string;
-  link?: string;
-}
-
-export interface Project {
-  id: string;
-  title: string;
-  coverImage: string;
-  badges: string[];
-  description: string;
-  links: { label: string; url: string }[];
+  period: string;
+  location: string;
+  summary: string;
+  bullets: string[];
+  projectSlug?: string;
 }
 
 export interface EducationEntry {
+  institution: string;
   degree: string;
-  institution: string;
   location: string;
-  year: string;
-  gpa?: string;
-  description: string;
-  advisor?: string;
-  logoUrl?: string;
+  period?: string;
+  note?: string;
 }
 
-export interface ExperienceEntry {
-  role: string;
-  company: string;
-  location: string;
-  year: string;
-  description: string;
-  bullets?: string[];
-  logoUrl?: string;
-}
-
-export interface TeachingEntry {
-  role: string;
-  institution: string;
-  location: string;
-  year: string;
-  course?: string;
-  courses?: { name: string; semester: string }[];
-  description?: string;
-  score?: string;
-  award?: string;
-}
-
-export interface PublicationEntry {
-  title: string;
-  authors: string;
-  conference: string;
-  year: string;
-  description: string;
-  links: { label: string; url: string }[];
-  awards?: string[];
-}
-
-export interface SkillCategory {
+export interface SkillGroup {
   category: string;
-  items: SkillItem[];
+  items: string[];
+  /** What this group of tools is used to build. */
+  purpose?: string;
+  /** Slugs of the case studies where this group was put into practice. */
+  usedIn?: string[];
 }
 
-export interface SkillItem {
-  name: string;
-  iconPath?: string;
-  hex?: string;
-  lucideIcon?: any;
-  emoji?: string;
+export interface JourneyStep {
+  place: string;
+  period: string;
+  detail: string;
 }
 
-export interface ResumeData {
-  education: EducationEntry[];
-  experience: ExperienceEntry[];
-  teaching: TeachingEntry[];
-  publications: PublicationEntry[];
-  skills: SkillCategory[];
+export interface FieldNote {
+  project: string;
+  projectSlug: string;
+  title: string;
+  symptom: string;
+  cause: string;
+  fix: string;
 }
 
-// ─── Personal Info ───────────────────────────────────────────────────────────
-export const personalInfo: PersonalInfo = {
+export interface OtherWork {
+  title: string;
+  context: string;
+  description: string;
+  link?: { label: string; url: string };
+}
+
+export interface Involvement {
+  role: string;
+  organization: string;
+  period: string;
+  description: string;
+}
+
+export const personalInfo = {
   name: "Mohamed Kebe",
-  role: "Software · Data Engineering · Intelligence Artificielle",
-  bio: [
-    "Élève-ingénieur en Data & IA Engineering à l'INSEA, à la croisée du software, de la data et de l'intelligence artificielle.",
-    "Je conçois des applications et des architectures de données, des systèmes distribués aux pipelines analytiques scalables.",
-    "Je développe des solutions en NLP et RAG, et j'explore l'IA agentique pour transformer les besoins métier en workflows intelligents.",
-    "Co-fondateur & Lead Architect de Wonkhaï, où je construis une plateforme multiservices fondée sur des architectures orientées événements.",
-  ],
-  photoUrls: [
-    "/images/profil.png",
-    "/images/profil.png",
-  ],
-  socialLinks: [
-    { name: "GitHub", url: "https://github.com/Kebe20222198", icon: Github },
-    { name: "LinkedIn", url: "https://www.linkedin.com/in/mohamed-kebe-1b79b1280/", icon: Linkedin },
-    { name: "Email", url: "mailto:mkebe2022@gmail.com", icon: Mail },
-  ],
-  contactGrid: [
-    { icon: Mail, text: "mkebe2022@gmail.com", url: "mailto:mkebe2022@gmail.com" },
-    { icon: Globe, text: "Rabat, Maroc" },
-    { icon: FileText, text: "CV / Resume", url: "/resume" },
-    { icon: Github, text: "github.com/Kebe20222198", url: "https://github.com/Kebe20222198" },
-    { icon: Linkedin, text: "linkedin.com/in/mohamed-kebe", url: "https://www.linkedin.com/in/mohamed-kebe-1b79b1280/" },
-  ],
+  headline: "Data Engineer & AI Engineer",
+  affiliation: "Engineering Student at INSEA",
+  pitch:
+    "Je conçois des architectures de données distribuées et des systèmes d'intelligence artificielle, de l'ingestion des données jusqu'à leur exploitation analytique et leur intégration dans des applications intelligentes.",
+  school: "Étudiant ingénieur à l'INSEA",
+  seeking: "Recherche de stage PFE",
+  seekingDetail: "Data Engineering ou AI Engineering",
+  location: "Rabat, Maroc",
+  email: "mkebe2022@gmail.com",
+  github: "https://github.com/Kebe20222198",
+  githubLabel: "github.com/Kebe20222198",
+  linkedin: "https://www.linkedin.com/in/mohamed-kebe-1b79b1280/",
+  linkedinLabel: "linkedin.com/in/mohamed-kebe",
+  portrait: "/images/portrait.jpg",
+  cvPage: "/resume",
+  cvFile: "/cv/Mohamed-Kebe-CV.pdf",
 };
 
-// ─── News ─────────────────────────────────────────────────────────────────────
-export const news: NewsItem[] = [
+export const manifesto =
+  "Je ne me limite pas à utiliser des technologies. Je conçois des architectures et je les construis de bout en bout, de la donnée brute jusqu'au système intelligent qui s'en sert.";
+
+export const journey: JourneyStep[] = [
+  { place: "Conakry", period: "2018 – 2021", detail: "Baccalauréat Sciences Mathématiques, major de promotion" },
+  { place: "El Jadida", period: "2022 – 2024", detail: "DEUG Mathématiques et Informatique Appliquée" },
+  { place: "Rabat", period: "INSEA · HCP 2025", detail: "Cycle ingénieur Data & Software, premier stage en data" },
+  { place: "Tunisie, à distance", period: "2026", detail: "Stage AI Engineering chez 3LM Solutions" },
+  { place: "Votre équipe ?", period: "Prochaine étape", detail: "Stage PFE en Data Engineering ou AI Engineering" },
+];
+
+export const fieldNotes: FieldNote[] = [
   {
-    id: "news-nyc-taxi-platform",
-    date: "2026",
-    status: "published",
-    description: "Conception d'une plateforme Lakehouse pour analyser jusqu'à 40 millions de courses Yellow Taxi par an : pipeline Spark orchestré par Airflow, qualité des données, Delta Lake et modèles analytiques dbt.",
-    link: "https://github.com/Kebe20222198/taxi-data-platform",
+    project: "CEG",
+    projectSlug: "cognitive-execution-graph",
+    title: "Mon propre benchmark m'a donné tort.",
+    symptom: "À la première exécution, CEG ne respectait la contrainte de qualité dans aucun scénario : 0,72 livré pour 0,75 exigé.",
+    cause: "Le moteur ne vérifiait la qualité minimale qu'après l'exécution, jamais au moment de choisir un modèle.",
+    fix: "Seuls les modèles capables d'atteindre le minimum sont désormais comparés. L'évaluation a corrigé le système au lieu de seulement le valider.",
   },
   {
-    id: "news-ceg",
-    date: "2026",
-    status: "published",
-    description: "Conception de CEG, un framework agnostique qui transforme une déclaration d'objectif, de contraintes et de sous-tâches en graphe agentique. Le Runtime Decision Engine choisit un modèle par étape ; un même plan fonctionne sur LangGraph, CrewAI ou Python. Le CLI, l'API FastAPI et le Studio React permettent de valider, visualiser et tracer les workflows. Les démos actuelles utilisent des exécuteurs simulés, avec un point d'extension prévu pour les fournisseurs LLM.",
-    link: "https://github.com/Kebe20222198/CEG",
+    project: "Lakehouse",
+    projectSlug: "nyc-taxi-lakehouse",
+    title: "Quelques zones ralentissaient tout le job.",
+    symptom: "Sur douze mois de trajets, une poignée de tâches Spark restaient loin derrière les autres.",
+    cause: "Un déséquilibre des données : les zones denses comme JFK et Midtown concentraient une grande partie des lignes.",
+    fix: "Salage des clés sur ces zones pour répartir la charge, puis Adaptive Query Execution pour gérer le reste.",
   },
   {
-    id: "news-transformer",
-    date: "MAI 2026",
-    status: "published",
-    description: "Présentation académique sur l'architecture interne des modèles Transformers (Self-Attention, Multi-Head Attention et structures Encodeur-Décodeur).",
-    link: "/Rapports/transformer2.pdf",
-  },
-  {
-    id: "1",
-    date: "MAI 2026",
-    status: "published",
-    description: "Développement d'une plateforme de backtesting quantitatif combinant des modèles de prévision, du machine learning et l'analyse NLP du sentiment des actualités financières.",
-  },
-  {
-    id: "2",
-    date: "MAI 2026",
-    status: "published",
-    description: "Développement d'un assistant RAG qui recherche dans les documents de l'utilisateur avec retrieval hybride, reranking et génération par LLM. Chaque réponse est accompagnée de ses sources pour rester vérifiable.",
-    link: "https://github.com/Kebe20222198/assistant-chatbot-support-client",
-  },
-  {
-    id: "3",
-    date: "AVRIL 2026",
-    status: "published",
-    description: "Conception d'un ERP multi-entités pour les secteurs cosmétique et agroalimentaire : finance, actifs, stocks, production, ventes et livraisons, avec traçabilité stricte et séparation des responsabilités.",
-    link: "https://github.com/Kebe20222198/Dio",
-  },
-  {
-    id: "4",
-    date: "FÉV 2026",
-    status: "published",
-    description: "Co-fondation de Wonkhaï — super-app (mobilité, marketplace, fintech) pilotée par une architecture de microservices événementiels.",
-  },
-  {
-    id: "5",
-    date: "2026",
-    description: "Représentation et logistique au Forum GENI Entreprises, le principal salon de recrutement d'ingénieurs au Maroc.",
-  },
-  {
-    id: "6",
-    date: "2026",
-    description: "Conception d'une serre agricole intelligente IoT avec supervision en temps réel et automatisation des capteurs environnementaux.",
+    project: "CEG",
+    projectSlug: "cognitive-execution-graph",
+    title: "Le simulateur ne m'avait pas tout dit.",
+    symptom: "Sur de vrais fournisseurs, des appels échouaient alors que tout passait en simulation.",
+    cause: "Le pare-feu de Groq refusait l'identifiant par défaut du client HTTP Python, et les modèles Llama prévus avaient été retirés.",
+    fix: "Client corrigé, catalogue de modèles mis à jour, et publication des limites : le petit modèle local n'a pas tenu sur le pipeline de calcul.",
   },
 ];
 
-// ─── Projects ─────────────────────────────────────────────────────────────────
-export const projects: Project[] = [
+export const about: string[] = [
+  "Je suis élève ingénieur en Data & Software Engineering à l'INSEA, à Rabat. Mon travail porte sur deux types de systèmes qui se complètent : les plateformes qui rendent la donnée fiable à grande échelle, et les applications qui s'appuient sur cette donnée pour raisonner et agir.",
+  "Côté données, j'ai construit un Lakehouse complet sur les courses de taxis new-yorkais : ingestion idempotente, traitements PySpark, quarantaine des enregistrements invalides, modèle dimensionnel dbt et orchestration Airflow. Mon stage au Haut-Commissariat au Plan m'a confronté au traitement de bases statistiques nationales.",
+  "Côté IA, j'ai conçu pendant mon stage chez 3LM Solutions le Cognitive Execution Graph, une couche déclarative pour exécuter des workflows LLM sous contraintes de coût, de latence et de qualité. J'ai aussi développé des pipelines RAG et des modèles de machine learning appliqués à la finance.",
+  "Sur chaque projet, je prends en charge la conception comme l'implémentation : cadrer le problème, arbitrer l'architecture, écrire le code, puis mesurer ce qui fonctionne et documenter ce qui reste limité. Je travaille aussi en équipe : chez Wonkhaï, je coordonne cinq développeurs selon une approche agile.",
+];
+
+export const experiences: ExperienceEntry[] = [
   {
-    id: "proj-nyc-taxi-platform",
-    title: "NYC Yellow Taxi — Data Lakehouse",
-    coverImage: "/images/projects/nyc-taxi-lakehouse.png",
-    badges: ["Data Engineering", "Spark · Airflow · dbt", "Delta Lake · MinIO"],
-    description:
-      "Plateforme analytique de bout en bout pour les données Yellow Taxi de New York, conçue pour un volume annuel de 35 à 40 millions de courses. Pipeline idempotent en architecture médaillon, contrôles qualité avec quarantaine, modélisation dimensionnelle et suivi des exécutions.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/taxi-data-platform" }],
+    company: "3LM Solutions",
+    role: "AI Engineering Internship",
+    period: "Juillet – Septembre 2026",
+    location: "Télétravail · Tunisie",
+    summary: "Conception et développement du Cognitive Execution Graph (CEG).",
+    bullets: [
+      "Architecture déclarative décrivant des tâches cognitives indépendamment des modèles et des frameworks.",
+      "Compilation de graphes de tâches vers des moteurs d'exécution.",
+      "Orchestration de workflows avec choix du modèle selon le coût, la latence et la qualité.",
+      "Évaluation des LLM sur le coût, la latence, la qualité et la robustesse.",
+    ],
+    projectSlug: "cognitive-execution-graph",
   },
   {
-    id: "proj-ceg",
-    title: "CEG — Cognitive Execution Graph",
-    coverImage: "/images/projects/cognitive-execution-graph.png",
-    badges: ["Agentic AI Framework", "LangGraph · CrewAI · Python", "FastAPI · React Studio"],
-    description:
-      "CEG est un framework agnostique pour déclarer l'objectif métier, les sous-tâches, les outils autorisés et les contraintes d'un workflow agentique. Son planificateur compile cette déclaration en graphe ; son Runtime Decision Engine choisit les modèles par étape selon coût, latence et qualité. Le même plan s'exécute avec LangGraph, CrewAI ou Python. CLI, API FastAPI et Studio React fournissent validation, visualisation du graphe et traces. Le prototype utilise aujourd'hui des exécuteurs déterministes simulés, avec un point d'extension prévu pour les fournisseurs LLM.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/CEG" }],
+    company: "Haut-Commissariat au Plan (HCP)",
+    role: "Data Engineering & Statistics Internship",
+    period: "Juillet – Août 2025",
+    location: "Rabat, Maroc",
+    summary: "Travaux sur des données statistiques nationales.",
+    bullets: [
+      "Nettoyage et traitement de grands jeux de données statistiques.",
+      "Préparation et transformation des données.",
+      "Feature engineering.",
+      "Exploitation de données statistiques nationales.",
+    ],
+  },
+];
+
+export const skills: SkillGroup[] = [
+  {
+    category: "Data Engineering",
+    purpose: "des pipelines distribués et rejouables, de la donnée brute au modèle dimensionnel testé.",
+    usedIn: ["nyc-taxi-lakehouse"],
+    items: ["PySpark", "Apache Spark", "Delta Lake", "Medallion Architecture", "ETL/ELT", "Apache Airflow", "dbt", "Data Quality", "Kimball"],
   },
   {
-    id: "proj-1",
+    category: "AI & Machine Learning",
+    purpose: "des modèles prédictifs entraînés et évalués sur des données financières et textuelles.",
+    usedIn: ["ml-financial-backtesting"],
+    items: ["Python", "Scikit-learn", "XGBoost", "Random Forest", "NLP", "Transformers", "FinBERT", "Time Series"],
+  },
+  {
+    category: "Generative AI",
+    purpose: "des workflows d'agents et des pipelines documentaires, mesurés sur le coût, la latence et la qualité.",
+    usedIn: ["cognitive-execution-graph", "agentic-rag-mcp"],
+    items: ["LLM", "RAG", "Agentic AI", "LangGraph", "MCP", "Qdrant", "Prompt Engineering", "LLM Evaluation"],
+  },
+  {
+    category: "Databases & Storage",
+    purpose: "le bon moteur selon l'usage : stockage objet, analytique, relationnel, cache ou recherche vectorielle.",
+    usedIn: ["nyc-taxi-lakehouse", "agentic-rag-mcp"],
+    items: ["PostgreSQL", "DuckDB", "MinIO", "MongoDB", "Redis", "Qdrant"],
+  },
+  {
+    category: "Software Engineering",
+    purpose: "des services conteneurisés, testés et livrés avec intégration continue.",
+    usedIn: ["nyc-taxi-lakehouse", "cognitive-execution-graph", "agentic-rag-mcp"],
+    items: ["Python", "SQL", "FastAPI", "Docker", "Docker Compose", "Git", "CI/CD", "Linux", "React"],
+  },
+  {
+    category: "Cloud & Déploiement",
+    purpose: "des systèmes conçus pour passer d'un poste local au cloud sans réécriture.",
+    usedIn: ["nyc-taxi-lakehouse"],
+    items: ["Stockage objet compatible S3", "Architectures cloud-native", "Services serverless (Neon, Upstash)", "Vercel", "GitHub Actions"],
+  },
+  {
+    category: "Collaboration & Méthodes",
+    purpose: "coordonner une équipe de cinq développeurs, travailler par itérations et rendre les choix techniques compréhensibles par tous.",
+    items: ["Méthodes agiles", "Travail en équipe", "Lead technique", "Documentation d'architecture", "Vulgarisation technique"],
+  },
+];
+
+/** Shown on the resume only: real skills outside the Data & AI positioning. */
+export const additionalSkills: SkillGroup[] = [
+  { category: "Autres technologies", items: ["C", "Rust", "Elixir", "Node.js", "NATS", "MySQL", "PostGIS", "Streamlit", "Power BI"] },
+  { category: "Langues", items: ["Français", "Anglais"] },
+];
+
+export const education: EducationEntry = {
+  institution: "Institut National de Statistique et d'Économie Appliquée (INSEA)",
+  degree: "Formation en Data & Software Engineering",
+  location: "Rabat, Maroc",
+};
+
+/** Full academic history, shown on the resume. */
+export const educationHistory: EducationEntry[] = [
+  { ...education, degree: "Cycle d'ingénieur — Data & Software Engineering", period: "En cours" },
+  {
+    institution: "Université Chouaib Doukkali — Faculté des Sciences",
+    degree: "DEUG — Mathématiques et Informatique Appliquée",
+    location: "El Jadida, Maroc",
+    period: "2022 – 2024",
+  },
+  {
+    institution: "Institution Sainte Marie",
+    degree: "Baccalauréat Sciences Mathématiques",
+    location: "Conakry, Guinée",
+    period: "2018 – 2021",
+    note: "Major de promotion, top 40 national.",
+  },
+];
+
+export const otherWork: OtherWork[] = [
+  {
     title: "Wonkhaï — Super-App Platform",
-    coverImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=400&fit=crop",
-    badges: ["Fév 2026 – Présent", "Co-Founder & Lead Architect"],
-    description:
-      "Plateforme multiservices (mobilité, commerce de détail, fintech) conçue sur une architecture microservices orientée événements (EDA) ultra-performante en Elixir et Rust. Modélisation de bases de données géospatiales et distribuées PostgreSQL/PostGIS et orchestration des flux asynchrones via NATS.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198" }],
+    context: "Co-fondateur & Lead Architect · depuis février 2026",
+    description: "Plateforme multiservices sur une architecture microservices orientée événements, en Elixir et Rust, avec PostgreSQL/PostGIS et NATS.",
   },
   {
-    id: "proj-2",
-    title: "Assistant documentaire RAG — Support Client",
-    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop",
-    badges: ["RAG hybride", "Reranking", "Réponses sourcées"],
-    description:
-      "Assistant de support qui répond à partir des documents fournis : récupération hybride, reranking et génération LLM avec sources traçables pour vérifier chaque réponse.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/assistant-chatbot-support-client" }],
+    title: "Plateforme e-commerce avec assistant IA",
+    context: "Mission client · en cours · Laravel",
+    description: "Boutique en ligne, back-office complet et assistant IA intégré, avec paiements en ligne et Mobile Money, et intégrations de messagerie.",
   },
   {
-    id: "proj-3",
-    title: "Plateforme de Backtesting & Trading",
-    coverImage: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=400&fit=crop",
-    badges: ["Mai 2026", "ML & NLP"],
-    description:
-      "Environnement de simulation quantitative et d'évaluation de portefeuilles financiers. Intégration de modèles de séries temporelles ARIMA/SARIMA pour la modélisation prédictive et d'architectures Transformers NLP pour l'évaluation en temps réel du sentiment des flux d'actualités financières.",
-    links: [],
+    title: "Dio ERP",
+    context: "React · Spring Boot · PostgreSQL",
+    description: "ERP multi-entités pour l'industrie cosmétique et agroalimentaire : finance, stocks, production, ventes et livraisons.",
+    link: { label: "GitHub", url: "https://github.com/Kebe20222198/Dio" },
   },
   {
-    id: "proj-4",
-    title: "Expense Tracker — Suivi des dépenses",
-    coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=400&fit=crop",
-    badges: ["Full-stack", "Express · Neon", "Rate limiting · Upstash"],
-    description:
-      "Application de suivi des dépenses avec API Express, stockage PostgreSQL serverless via Neon et limitation des requêtes avec Upstash Redis pour protéger les endpoints.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/Expense-Tracker" }],
+    title: "L'architecture des Transformers",
+    context: "Exposé académique · INSEA · mai 2026",
+    description: "Étude du fonctionnement interne des Transformers : self-attention, multi-head attention, encodeur-décodeur.",
+    link: { label: "PDF", url: "/Rapports/transformer2.pdf" },
   },
   {
-    id: "proj-5",
-    title: "Grammar Checker — Automates Finis",
-    coverImage: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop",
-    badges: ["Déc 2025", "C & GTK3"],
-    description:
-      "Moteur de validation syntaxique développé en C. Modélisation mathématique et implémentation de graphes sous forme de listes d'adjacence pour simuler, parser et minimiser des automates finis déterministes et non déterministes (DFA/NFA) avec interface graphique GTK3.",
-    links: [],
+    title: "Expense Tracker",
+    context: "Express · Neon · Upstash",
+    description: "Suivi des dépenses avec API Express, PostgreSQL serverless et limitation des requêtes.",
+    link: { label: "GitHub", url: "https://github.com/Kebe20222198/Expense-Tracker" },
   },
   {
-    id: "proj-6",
-    title: "Dio ERP — Industrie & Production",
-    coverImage: "https://images.unsplash.com/photo-1567789884554-0b844b597180?w=800&h=400&fit=crop",
-    badges: ["React · Spring Boot", "PostgreSQL", "ERP multi-entités"],
-    description:
-      "ERP modulaire destiné aux activités cosmétiques et agroalimentaires, couvrant finance, actifs, stocks, production, ventes, livraisons et tâches avec séparation des responsabilités et traçabilité multi-entités.",
-    links: [{ label: "GitHub", url: "https://github.com/Kebe20222198/Dio" }],
+    title: "Grammar Checker",
+    context: "C · GTK3 · décembre 2025",
+    description: "Simulation, analyse et minimisation d'automates finis (DFA/NFA) avec interface graphique.",
   },
   {
-    id: "proj-7",
     title: "Reverse Engineering — Watiqa.ma",
-    coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
-    badges: ["Avril 2026", "Analyse & UML"],
-    description:
-      "Rétro-ingénierie et modélisation logicielle d'une plateforme gouvernementale de documents administratifs. Application du processus unifié 2TUP (Two-Track Unified Process) et spécification rigoureuse de l'architecture cible via diagrammes UML.",
-    links: [],
+    context: "2TUP · UML · avril 2026",
+    description: "Rétro-ingénierie d'une plateforme de documents administratifs et spécification de l'architecture cible.",
   },
   {
-    id: "proj-8",
-    title: "Serre Agricole Connectée (IoT)",
-    coverImage: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800&h=400&fit=crop",
-    badges: ["2026", "Projet IoT"],
-    description:
-      "Système embarqué IoT de monitoring de serres agricoles. Acquisition de métriques environnementales multiples, traitement embarqué temps réel sur microcontrôleur et dashboard de supervision réactif pour l'aide à la décision.",
-    links: [],
+    title: "Serre agricole connectée",
+    context: "IoT · 2026",
+    description: "Acquisition de mesures environnementales, traitement embarqué et supervision.",
   },
 ];
 
-// ─── Resume Data ──────────────────────────────────────────────────────────────
-export const resumeData: ResumeData = {
-  // ── Formations ──
-  education: [
-    {
-      degree: "Cycle d'Ingénieur — Data & IA Engineering",
-      institution: "Institut National de Statistique et d'Économie Appliquée (INSEA)",
-      location: "Rabat, Maroc",
-      year: "En cours",
-      description: "Bases de données, Big Data, machine learning et architectures distribuées.",
-      logoUrl: "/images/insea-logo.png",
-    },
-    {
-      degree: "DEUG — Mathématiques et Informatique Appliquée",
-      institution: "Université Chouaib Doukkali — Faculté des Sciences",
-      location: "El Jadida, Maroc",
-      year: "2022 – 2024",
-      description: "Algorithmique, structures de données complexes et mathématiques appliquées.",
-      logoUrl: "/images/chouaib-dukkali-logo.png",
-    },
-    {
-      degree: "Baccalauréat Sciences Mathématiques",
-      institution: "Institution Sainte Marie",
-      location: "Conakry, Guinée",
-      year: "2018 – 2021",
-      description: "Major de promotion (1er) et classé dans le top 40 national.",
-      logoUrl: "/images/sainte-marie-logo.png",
-    },
-  ],
-
-  // ── Projets & Expériences ──
-  experience: [
-    {
-      role: "Stagiaire — Découverte Professionnelle",
-      company: "Haut Commissariat au Plan (HCP)",
-      location: "Rabat, Maroc",
-      year: "Juillet 2025",
-      description:
-        "Stage d'immersion professionnelle axé sur la découverte des outils statistiques et l'initiation aux processus de gestion, d'analyse et de traitement de données.",
-      logoUrl: "/images/hcp-logo.png",
-    },
-    {
-      role: "Data Engineer — NYC Yellow Taxi Lakehouse",
-      company: "Projet personnel",
-      location: "Rabat, Maroc",
-      year: "2026",
-      description:
-        "Conception d'un pipeline analytique pour les données NYC Yellow Taxi, de l'ingestion jusqu'aux marts décisionnels.",
-      bullets: [
-        "Orchestration des traitements Spark avec Airflow et stockage en architecture médaillon sur MinIO et Delta Lake.",
-        "Ajout de contrôles de qualité, d'une zone de quarantaine et de transformations dbt pour le modèle analytique.",
-      ],
-    },
-    {
-      role: "Concepteur — Cognitive Execution Graph (CEG)",
-      company: "Projet personnel",
-      location: "Rabat, Maroc",
-      year: "2026",
-      description:
-        "Création d'un framework déclaratif et agnostique pour planifier et exécuter des workflows agentiques sous contraintes.",
-      bullets: [
-        "Planification d'objectifs et de sous-tâches sous forme de graphes, avec choix de modèle selon coût, latence et qualité.",
-        "Support de backends LangGraph, CrewAI et Python, avec CLI, API FastAPI et Studio React pour visualiser et tracer les exécutions.",
-        "Les démonstrations actuelles s'appuient sur des exécuteurs simulés ; les fournisseurs LLM se branchent via l'interface Executor.",
-      ],
-    },
-    {
-      role: "Co-Founder & Lead Architect",
-      company: "Wonkhaï — Super-App Platform",
-      location: "Rabat, Maroc",
-      year: "Fév 2026 – Présent",
-      description:
-        "Co-fondation et direction de l'ingénierie logicielle et système d'une super-app intégrant de la mobilité urbaine, du commerce en ligne et des services de paiement.",
-      bullets: [
-        "Conception de l'architecture microservices orientée événements (EDA) hautement concurrente en Elixir et Rust.",
-        "Modélisation et optimisation des schémas de bases de données relationnelles et spatiales (PostgreSQL + PostGIS) sous haute charge transactionnelle.",
-        "Orchestration des flux asynchrones inter-services via le bus de messagerie NATS et gestion d'une équipe de 5 développeurs.",
-      ],
-    },
-    {
-      role: "Développeur — Assistant RAG",
-      company: "Projet Personnel",
-      location: "Remote",
-      year: "Mai 2026",
-      description:
-        "Développement d'un assistant documentaire RAG combinant recherche hybride, reranking et génération de réponses avec sources vérifiables.",
-      bullets: [
-        "Mise en place d'une récupération hybride des passages documentaires et d'une étape de reranking avant génération.",
-        "Production de réponses sourcées afin de permettre à l'utilisateur de vérifier les informations récupérées.",
-      ],
-    },
-    {
-      role: "Développeur — Plateforme de Backtesting & Trading",
-      company: "Projet Personnel",
-      location: "Remote",
-      year: "Mai 2026",
-      description:
-        "Développement d'un système d'analyse prédictive et de simulation pour l'évaluation quantitative de portefeuilles financiers.",
-      bullets: [
-        "Implémentation de modèles de séries temporelles ARIMA/SARIMA pour la prévision de tendances de marché.",
-        "Extraction de signaux sémantiques par classification de sentiments de flux d'actualités financières via Transformers NLP.",
-        "Conception d'une console interactive réactive avec Streamlit pour l'exploration de backtests et de scénarios financiers.",
-      ],
-    },
-    {
-      role: "Lead Developer",
-      company: "Dio ERP — Industrie cosmétique & agroalimentaire",
-      location: "INSEA, Rabat",
-      year: "Avril 2026",
-      description:
-        "Conception d'un ERP multi-entités couvrant les opérations financières, les stocks, la production, les ventes et les livraisons.",
-      bullets: [
-        "Structuration des modules métier avec traçabilité des opérations et séparation des responsabilités.",
-      ],
-    },
-  ],
-
-  // ── Vie Associative ──
-  teaching: [
-    {
-      role: "Trésorier",
-      institution: "Association des Stagiaires et Étudiants Guinéens au Maroc (ASEGUIM)",
-      location: "Rabat, Maroc — Ambassade de la République de Guinée",
-      year: "2025 – 2026",
-      description:
-        "Pilotage financier et budgétaire de l'association. Gestion rigoureuse de la trésorerie (suivi des cotisations, subventions institutionnelles) pour le financement d'activités culturelles et académiques pour plus de 1 200 étudiants.",
-    },
-    {
-      role: "Membre — Cellule Communication",
-      institution: "Forum GENI Entreprises",
-      location: "Maroc",
-      year: "2026",
-      description:
-        "Organisation médiatique et logistique du plus grand forum de recrutement d'ingénieurs au Maroc, coordonnant la synergie entre de grandes écoles (INSEA, INPT, ENSIAS, EMI).",
-    },
-    {
-      role: "Membre Actif",
-      institution: "Club INSEA Innovation Edge",
-      location: "INSEA, Rabat",
-      year: "2025",
-      description:
-        "Animation de l'écosystème entrepreneurial étudiant par l'organisation de hackathons et d'ateliers techniques axés sur les technologies émergentes.",
-    },
-  ],
-
-  // ── Publications ──
-  publications: [
-    {
-      title: "Exposé Académique — L'Architecture des Transformers",
-      authors: "Mohamed Kebe",
-      conference: "INSEA Rabat",
-      year: "Mai 2026",
-      description:
-        "Étude et présentation technique sur le fonctionnement interne des architectures de Transformers. Analyse détaillée des mécanismes d'attention, de l'auto-attention (Self-Attention) et des étapes d'encodage/décodage.",
-      links: [{ label: "Consulter le PDF", url: "/Rapports/transformer2.pdf" }],
-    },
-  ],
-
-  // ── Compétences Techniques ──
-  skills: [
-    {
-      category: "Langages",
-      items: [
-        { name: "Python", iconPath: siPython.path, hex: siPython.hex },
-        { name: "SQL", lucideIcon: Database },
-        { name: "C", iconPath: siC.path, hex: siC.hex },
-        { name: "Rust", iconPath: siRust.path, hex: siRust.hex },
-        { name: "Elixir", iconPath: siElixir.path, hex: siElixir.hex },
-        { name: "Node.js", iconPath: siNodedotjs.path, hex: siNodedotjs.hex },
-      ],
-    },
-    {
-      category: "Data & ML",
-      items: [
-        { name: "Pandas", iconPath: siPandas.path, hex: siPandas.hex },
-        { name: "NumPy", iconPath: siNumpy.path, hex: siNumpy.hex },
-        { name: "ML / NLP", lucideIcon: Cpu },
-        { name: "ARIMA / SARIMA", lucideIcon: Layers },
-        { name: "Streamlit", iconPath: siStreamlit.path, hex: siStreamlit.hex },
-        { name: "Apache Airflow", iconPath: siApacheairflow.path, hex: siApacheairflow.hex },
-        { name: "Power BI", lucideIcon: Layers },
-      ],
-    },
-    {
-      category: "Bases de données",
-      items: [
-        { name: "PostgreSQL", iconPath: siPostgresql.path, hex: siPostgresql.hex },
-        { name: "MySQL", iconPath: siMysql.path, hex: siMysql.hex },
-        { name: "MongoDB", iconPath: siMongodb.path, hex: siMongodb.hex },
-        { name: "Redis", iconPath: siRedis.path, hex: siRedis.hex },
-        { name: "Qdrant (Vector DB)", lucideIcon: Database },
-        { name: "PostGIS", lucideIcon: Globe },
-      ],
-    },
-    {
-      category: "Backend & DevOps",
-      items: [
-        { name: "FastAPI", iconPath: siFastapi.path, hex: siFastapi.hex },
-        { name: "Docker", iconPath: siDocker.path, hex: siDocker.hex },
-        { name: "Microservices", lucideIcon: Server },
-        { name: "NATS", lucideIcon: Box },
-        { name: "React Native", iconPath: siReact.path, hex: siReact.hex },
-        { name: "HTML / CSS", iconPath: siHtml5.path, hex: siHtml5.hex },
-      ],
-    },
-    {
-      category: "Langues",
-      items: [
-        { name: "Français", emoji: "🇫🇷" },
-        { name: "Anglais", emoji: "🇬🇧" },
-      ],
-    },
-  ],
-};
+export const involvement: Involvement[] = [
+  {
+    role: "Trésorier",
+    organization: "Association des Stagiaires et Étudiants Guinéens au Maroc (ASEGUIM)",
+    period: "2025 – 2026",
+    description: "Gestion du budget, des cotisations et du financement des activités de l'association.",
+  },
+  {
+    role: "Membre — Cellule communication",
+    organization: "Forum GENI Entreprises",
+    period: "2026",
+    description: "Organisation du forum de recrutement réunissant des écoles d'ingénieurs marocaines.",
+  },
+  {
+    role: "Membre actif",
+    organization: "Club INSEA Innovation Edge",
+    period: "2025",
+    description: "Organisation d'événements et d'ateliers sur l'innovation technologique et l'entrepreneuriat.",
+  },
+];

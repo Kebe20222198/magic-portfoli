@@ -1,48 +1,15 @@
-"use client";
-
 import { personalInfo } from "@/data/portfolio";
-import { motion } from "framer-motion";
 import SocialLinks from "@/components/SocialLinks";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
-    <motion.footer
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6 }}
-      className="mt-24 relative z-10 border-t border-stone-200/80 dark:border-white/10 no-print"
-    >
-      <div className="py-10 text-sm text-text-secondary dark:text-text-secondary-dark">
-        <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* Left: name + social */}
-          <div className="flex flex-col items-center md:items-start gap-3">
-            <div className="flex items-center gap-3">
-              <SocialLinks variant="footer" />
-            </div>
-            <p className="text-xs">
-              © {year}{" "}
-              <span className="font-semibold text-text-primary dark:text-text-primary-dark">
-                {personalInfo.name}
-              </span>{" "}
-              — Tous droits réservés
-            </p>
-          </div>
-
-          {/* Right */}
-          <div className="text-center md:text-right text-xs">
-            <p className="text-gray-400 dark:text-gray-600">
-              Réalisé avec{" "}
-              <span className="text-rose-500">♥</span>{" "}
-              <span className="font-medium text-text-secondary dark:text-text-secondary-dark">
-                Next.js & Tailwind CSS
-              </span>
-            </p>
-          </div>
-        </div>
+    <footer className="no-print border-t border-line">
+      <div className="page flex flex-col gap-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {new Date().getFullYear()} {personalInfo.name}
+        </p>
+        <SocialLinks />
       </div>
-    </motion.footer>
+    </footer>
   );
 }

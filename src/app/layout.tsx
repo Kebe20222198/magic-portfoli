@@ -1,98 +1,84 @@
 import type { Metadata } from "next";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
+import { RevealController } from "@/components/Motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ParticleBackground from "@/components/ParticleBackground";
 import BackToTop from "@/components/BackToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { personalInfo } from "@/data/portfolio";
 import { siteUrl } from "@/lib/site-url";
+
+const sans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-sans", display: "swap" });
+const display = Instrument_Serif({ subsets: ["latin"], weight: "400", variable: "--font-display", display: "swap" });
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
+
+const title = "Mohamed Kebe | Data Engineer & AI Engineer";
+const description =
+  "Étudiant ingénieur à l'INSEA, à la recherche d'un stage PFE. Architectures Lakehouse, pipelines distribués, LLM, RAG et systèmes agentiques, conçus de bout en bout.";
 
 export const metadata: Metadata = {
   metadataBase: siteUrl,
-  icons: {
-    icon: "/images/profil.png",
-    shortcut: "/images/profil.png",
-    apple: "/images/profil.png",
-  },
-  title: {
-    default: "Mohamed Kebe | Portfolio Data & Software Engineer",
-    template: "%s | Mohamed Kebe",
-  },
-  description:
-    "Portfolio personnel de Mohamed Kebe, ingénieur Data & IA à l'INSEA. Découvrez ses projets, son parcours et ses compétences en Data Engineering et systèmes distribués.",
+  title: { default: title, template: "%s | Mohamed Kebe" },
+  description,
   keywords: [
-    "portfolio",
-    "data engineering",
-    "software engineer",
+    "Data Engineer",
+    "AI Engineer",
+    "stage PFE",
     "INSEA",
-    "Python",
-    "Elixir",
-    "Rust",
-    "machine learning",
-    "NLP",
-    "microservices",
+    "Lakehouse",
+    "PySpark",
+    "Delta Lake",
+    "Airflow",
+    "dbt",
+    "LLM",
+    "RAG",
+    "LangGraph",
   ],
-  authors: [{ name: "Mohamed Kebe" }],
-  creator: "Mohamed Kebe",
+  authors: [{ name: personalInfo.name }],
+  creator: personalInfo.name,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Mohamed Kebe | Portfolio Data & Software Engineer",
-    description: "Projets, parcours et compétences de Mohamed Kebe en Data Engineering et intelligence artificielle.",
+    title,
+    description,
     type: "website",
     url: "/",
-    siteName: "Portfolio de Mohamed Kebe",
+    siteName: "Mohamed Kebe",
     locale: "fr_FR",
-    images: [{ url: "/images/profil.png", width: 800, height: 800, alt: "Portrait de Mohamed Kebe" }],
   },
-  twitter: {
-    card: "summary",
-    title: "Mohamed Kebe | Portfolio Data & Software Engineer",
-    description: "Portfolio personnel de Mohamed Kebe : projets, parcours et compétences.",
-    images: ["/images/profil.png"],
-  },
+  twitter: { card: "summary_large_image", title, description },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: personalInfo.name,
+  url: siteUrl.toString(),
+  jobTitle: personalInfo.headline,
+  alumniOf: { "@type": "CollegeOrUniversity", name: "INSEA" },
+  address: { "@type": "PostalAddress", addressLocality: "Rabat", addressCountry: "MA" },
+  sameAs: [personalInfo.github, personalInfo.linkedin],
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <body className="font-sans antialiased min-h-screen">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <html lang="fr" suppressHydrationWarning className={`${sans.variable} ${display.variable} ${mono.variable}`}>
+      <body className="min-h-screen font-sans antialiased">
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "Person",
-                name: "Mohamed Kebe",
-                url: siteUrl.toString(),
-                jobTitle: "Data & Software Engineer",
-                alumniOf: { "@type": "CollegeOrUniversity", name: "INSEA" },
-                sameAs: [
-                  "https://github.com/Kebe20222198",
-                  "https://www.linkedin.com/in/mohamed-kebe-1b79b1280/",
-                ],
-              }),
-            }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
           />
-          {/* Accessibility: skip to content */}
-          <a href="#main-content" className="skip-to-content">
+          <a href="#main-content" className="skip-link no-print">
             Aller au contenu
           </a>
-
-          <ParticleBackground />
           <Navbar />
-
-          <main id="main-content" className="relative z-10 flex flex-col min-h-screen">
+          <RevealController />
+          <main id="main-content" tabIndex={-1} className="animate-fade-in outline-none">
             {children}
-            <div className="mt-auto">
-              <Footer />
-            </div>
           </main>
-
+          <Footer />
           <BackToTop />
         </ThemeProvider>
       </body>

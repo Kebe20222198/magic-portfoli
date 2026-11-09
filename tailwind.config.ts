@@ -1,50 +1,35 @@
 import type { Config } from "tailwindcss";
 
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/components/**/*.{ts,tsx}", "./src/app/**/*.{ts,tsx}"],
   darkMode: "class",
   theme: {
     extend: {
       colors: {
-        // Light mode — changed from cream #f7f5f2 to pure white #ffffff based on request
-        'bg-light':     '#ffffff',      
-        'bg-light-end': '#ffffff',      
-        'card-light':   '#ffffff',
-        'text-primary': '#111218',      
-        'text-secondary':'#52525b',     
-        'accent':       '#4f46e5',      
-
-        // Tokens supplémentaires light
-        'badge-border': '#e4e2de',      
-
-        // Dark mode
-        'bg-dark':               '#0b1120',
-        'card-dark':             '#060b16',
-        'text-primary-dark':     '#f3f4f6',
-        'text-secondary-dark':   '#9ca3af',
-        'badge-border-dark':     '#0d1628',
-      },
-      animation: {
-        "fade-in": "fadeIn 0.5s ease-out forwards",
-        "slide-up": "slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards",
-      },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
+        canvas: token("canvas"),
+        surface: token("surface"),
+        ink: token("ink"),
+        muted: token("muted"),
+        line: token("line"),
+        accent: token("accent"),
+        warn: token("warn"),
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
+      maxWidth: {
+        page: "72rem",
+        prose: "42rem",
+      },
+      keyframes: {
+        "fade-in": { from: { opacity: "0" }, to: { opacity: "1" } },
+      },
+      animation: {
+        "fade-in": "fade-in 0.35s ease-out both",
       },
     },
   },

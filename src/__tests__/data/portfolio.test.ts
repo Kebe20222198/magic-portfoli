@@ -1,141 +1,100 @@
-import { describe, it, expect } from "vitest";
-import {
-  personalInfo,
-  news,
-  projects,
-  resumeData,
-} from "@/data/portfolio";
+import { describe, expect, it } from "vitest";
+import { education, experiences, fieldNotes, journey, personalInfo, skills } from "@/data/portfolio";
+import { getProject, projects } from "@/data/projects";
 
-describe("portfolio data — personalInfo", () => {
-  it("has a non-empty name and role", () => {
-    expect(personalInfo.name.length).toBeGreaterThan(0);
-    expect(personalInfo.role.length).toBeGreaterThan(0);
+describe("profile data", () => {
+  it("states the positioning and the internship search", () => {
+    expect(personalInfo.headline).toBe("Data Engineer & AI Engineer");
+    expect(personalInfo.seeking).toContain("PFE");
+    expect(personalInfo.location).toBe("Rabat, Maroc");
   });
 
-  it("has at least one bio line", () => {
-    expect(personalInfo.bio.length).toBeGreaterThanOrEqual(1);
-    for (const line of personalInfo.bio) {
-      expect(typeof line).toBe("string");
-      expect(line.length).toBeGreaterThan(0);
-    }
+  it("lists exactly the two professional experiences", () => {
+    expect(experiences.map((entry) => entry.period)).toEqual(["Juillet – Septembre 2026", "Juillet – Août 2025"]);
   });
 
-  it("has exactly two photo URLs", () => {
-    expect(personalInfo.photoUrls).toHaveLength(2);
+  it("groups skills in the expected categories", () => {
+    expect(skills.map((group) => group.category)).toEqual([
+      "Data Engineering",
+      "AI & Machine Learning",
+      "Generative AI",
+      "Databases & Storage",
+      "Software Engineering",
+      "Cloud & Déploiement",
+      "Collaboration & Méthodes",
+    ]);
   });
 
-  it("has social links with name, url, and icon", () => {
-    expect(personalInfo.socialLinks.length).toBeGreaterThanOrEqual(1);
-    for (const link of personalInfo.socialLinks) {
-      expect(link.name).toBeTruthy();
-      expect(link.url).toBeTruthy();
-      expect(link.icon).toBeDefined();
-    }
-  });
-
-  it("has a contactGrid with at least one entry", () => {
-    expect(personalInfo.contactGrid.length).toBeGreaterThanOrEqual(1);
-    for (const c of personalInfo.contactGrid) {
-      expect(c.icon).toBeDefined();
-      expect(c.text).toBeTruthy();
-    }
+  it("does not invent a graduation date", () => {
+    expect(education.period).toBeUndefined();
   });
 });
 
-describe("portfolio data — news", () => {
-  it("is a non-empty array", () => {
-    expect(news.length).toBeGreaterThan(0);
+describe("project case studies", () => {
+  it("keeps the strategic order", () => {
+    expect(projects.map((project) => project.slug)).toEqual([
+      "nyc-taxi-lakehouse",
+      "cognitive-execution-graph",
+      "agentic-rag-mcp",
+      "ml-financial-backtesting",
+    ]);
   });
 
-  it("every news item has id, date, and description", () => {
-    for (const item of news) {
-      expect(item.id).toBeTruthy();
-      expect(item.date).toBeTruthy();
-      expect(item.description).toBeTruthy();
-    }
+  it.each(projects.map((project) => [project.slug, project] as const))("%s is complete", (_slug, project) => {
+    expect(project.problem.length).toBeGreaterThan(0);
+    expect(project.objectives.length).toBeGreaterThan(0);
+    expect(project.architecture.length).toBeGreaterThan(0);
+    expect(project.diagram.stages.length).toBeGreaterThan(1);
+    expect(project.stack.length).toBeGreaterThan(0);
+    expect(project.features.length).toBeGreaterThan(0);
+    expect(project.decisions.length).toBeGreaterThan(0);
+    expect(project.results.note).toBeTruthy();
+    expect(project.repository.url || project.repository.note).toBeTruthy();
   });
 
-  it("uses only valid status values when present", () => {
-    const validStatuses = ["upcoming", "published", "award"];
-    for (const item of news) {
-      if (item.status) {
-        expect(validStatuses).toContain(item.status);
+  it("only draws graph edges between existing nodes", () => {
+    for (const graph of projects.flatMap((project) => project.graphs ?? [])) {
+      const ids = new Set(graph.nodes.map((node) => node.id));
+      for (const edge of graph.edges) {
+        expect(ids.has(edge.from) && ids.has(edge.to)).toBe(true);
       }
     }
   });
 
-  it("has unique ids", () => {
-    const ids = news.map((n) => n.id);
-    expect(new Set(ids).size).toBe(ids.length);
+  it("publishes no metrics for projects without a measured source", () => {
+    expect(getProject("agentic-rag-mcp")?.results.rows).toEqual([]);
+    expect(getProject("ml-financial-backtesting")?.results.rows).toEqual([]);
+  });
+
+  it("does not claim benchmarks that were not run", () => {
+    const ceg = JSON.stringify(getProject("cognitive-execution-graph"));
+    expect(ceg).not.toMatch(/GPT-4o|Claude/);
+  });
+
+  it("labels every simulated CEG result", () => {
+    const rows = getProject("cognitive-execution-graph")?.results.rows ?? [];
+    const optimizer = rows.filter((row) => row.metric.startsWith("Optimiseur"));
+    expect(optimizer.length).toBeGreaterThan(0);
+    for (const row of optimizer) expect(row.context).toContain("simulé");
+  });
+
+  it("returns undefined for an unknown slug", () => {
+    expect(getProject("unknown")).toBeUndefined();
   });
 });
 
-describe("portfolio data — projects", () => {
-  it("is a non-empty array", () => {
-    expect(projects.length).toBeGreaterThan(0);
+describe("authenticity content", () => {
+  it("uses the real rejection rate for the hero animation", () => {
+    expect(1 / 154).toBeCloseTo(0.0065, 4);
+    expect(getProject("nyc-taxi-lakehouse")?.highlights.join(" ")).toContain("0,65 %");
   });
 
-  it("every project has id, title, description, badges, and links", () => {
-    for (const proj of projects) {
-      expect(proj.id).toBeTruthy();
-      expect(proj.title).toBeTruthy();
-      expect(proj.description).toBeTruthy();
-      expect(Array.isArray(proj.badges)).toBe(true);
-      expect(Array.isArray(proj.links)).toBe(true);
-      expect(proj.links.length).toBeGreaterThanOrEqual(1);
-    }
+  it("links every field note and skill to an existing project", () => {
+    for (const note of fieldNotes) expect(getProject(note.projectSlug)).toBeDefined();
+    for (const slug of skills.flatMap((group) => group.usedIn ?? [])) expect(getProject(slug)).toBeDefined();
   });
 
-  it("has unique ids", () => {
-    const ids = projects.map((p) => p.id);
-    expect(new Set(ids).size).toBe(ids.length);
-  });
-
-  it("every project link has label and url", () => {
-    for (const proj of projects) {
-      for (const link of proj.links) {
-        expect(link.label).toBeTruthy();
-        expect(link.url).toBeTruthy();
-      }
-    }
-  });
-});
-
-describe("portfolio data — resumeData", () => {
-  it("has education entries", () => {
-    expect(resumeData.education.length).toBeGreaterThan(0);
-    for (const edu of resumeData.education) {
-      expect(edu.degree).toBeTruthy();
-      expect(edu.institution).toBeTruthy();
-      expect(edu.year).toBeTruthy();
-    }
-  });
-
-  it("has experience entries", () => {
-    expect(resumeData.experience.length).toBeGreaterThan(0);
-    for (const exp of resumeData.experience) {
-      expect(exp.role).toBeTruthy();
-      expect(exp.company).toBeTruthy();
-      expect(exp.year).toBeTruthy();
-    }
-  });
-
-  it("has skills categories with items", () => {
-    expect(resumeData.skills.length).toBeGreaterThan(0);
-    for (const cat of resumeData.skills) {
-      expect(cat.category).toBeTruthy();
-      expect(cat.items.length).toBeGreaterThan(0);
-      for (const item of cat.items) {
-        expect(item.name).toBeTruthy();
-      }
-    }
-  });
-
-  it("has publications array", () => {
-    expect(Array.isArray(resumeData.publications)).toBe(true);
-  });
-
-  it("has teaching array", () => {
-    expect(Array.isArray(resumeData.teaching)).toBe(true);
+  it("ends the journey on the internship search", () => {
+    expect(journey[journey.length - 1].detail).toContain("PFE");
   });
 });

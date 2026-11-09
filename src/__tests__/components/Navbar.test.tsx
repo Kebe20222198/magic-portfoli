@@ -1,79 +1,44 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Navbar from "@/components/Navbar";
 
-vi.mock("framer-motion", () => ({
-  motion: {
-    header: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <header className={className}>{children}</header>;
-    },
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const safe: Record<string, unknown> = {};
-      for (const [key, value] of Object.entries(props)) {
-        if (typeof key === "string" && !["initial", "animate", "exit", "transition", "layoutId", "variants"].includes(key)) {
-          safe[key] = value;
-        }
-      }
-      return <div {...safe}>{children}</div>;
-    },
-  },
-  useScroll: () => ({ scrollY: { get: () => 0, on: vi.fn() } }),
-  useMotionValueEvent: vi.fn(),
-  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
-}));
+const setTheme = vi.fn();
+let pathname = "/";
 
-vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: React.PropsWithChildren<{ href: string }>) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
-}));
+vi.mock("next/navigation", () => ({ usePathname: () => pathname }));
+vi.mock("next-themes", () => ({ useTheme: () => ({ resolvedTheme: "light", setTheme }) }));
 
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/",
-}));
-
-vi.mock("next-themes", () => ({
-  useTheme: () => ({ theme: "light", setTheme: vi.fn() }),
-}));
+beforeEach(() => {
+  pathname = "/";
+  setTheme.mockClear();
+});
 
 describe("Navbar", () => {
-  beforeEach(() => {
-    Object.defineProperty(window, "scrollY", { value: 0, writable: true });
+  it("links to the sections and the CV", () => {
+    render(<Navbar />);
+    expect(screen.getByRole("link", { name: "Projets" })).toHaveAttribute("href", "/#projects");
+    expect(screen.getByRole("link", { name: "CV" })).toHaveAttribute("href", "/resume");
   });
 
-  it("renders the MK. logo link", () => {
+  it("marks the CV link as current on the resume page", () => {
+    pathname = "/resume";
     render(<Navbar />);
-    const logos = screen.getAllByText("MK.");
-    expect(logos.length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByRole("link", { name: "CV" })).toHaveAttribute("aria-current", "page");
   });
 
-  it("renders all navigation links", () => {
+  it("toggles the theme", () => {
     render(<Navbar />);
-    expect(screen.getAllByText("À propos").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Actualités").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Projets").length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText("Resume").length).toBeGreaterThanOrEqual(1);
+    fireEvent.click(screen.getByRole("button", { name: "Activer le thème sombre" }));
+    expect(setTheme).toHaveBeenCalledWith("dark");
   });
 
-  it("renders a theme toggle button", () => {
+  it("opens the mobile menu and closes it with Escape", () => {
     render(<Navbar />);
-    const themeButtons = screen.getAllByRole("button", { name: /thème/i });
-    expect(themeButtons.length).toBeGreaterThanOrEqual(1);
-  });
-
-  it("renders mobile menu toggle button", () => {
-    render(<Navbar />);
-    const menuButton = screen.getByRole("button", { name: /ouvrir le menu/i });
-    expect(menuButton).toBeInTheDocument();
-  });
-
-  it("opens mobile menu on hamburger click", () => {
-    render(<Navbar />);
-    const menuButton = screen.getByRole("button", { name: /ouvrir le menu/i });
-    fireEvent.click(menuButton);
-    expect(screen.getByRole("button", { name: /fermer le menu/i })).toBeInTheDocument();
+    const toggle = screen.getByRole("button", { name: "Ouvrir le menu" });
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(toggle);
+    expect(screen.getByRole("navigation", { name: "Navigation mobile" })).toBeInTheDocument();
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.queryByRole("navigation", { name: "Navigation mobile" })).not.toBeInTheDocument();
   });
 });

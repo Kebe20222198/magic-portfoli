@@ -1,9 +1,9 @@
-const deploymentHost = process.env.VERCEL_URL;
-const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-const siteUrlValue =
-  configuredSiteUrl ||
-  (deploymentHost ? `https://${deploymentHost}` : "https://magic-portfolio.vercel.app");
+const PRODUCTION_URL = "https://mohamed-kebe-data-ia-software-engin.vercel.app";
 
-export const siteUrl = new URL(
-  /^https?:\/\//i.test(siteUrlValue) ? siteUrlValue : `https://${siteUrlValue}`,
-);
+const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim() || PRODUCTION_URL;
+
+/**
+ * Canonical origin of the site. It deliberately ignores VERCEL_URL, which is
+ * unique per deployment and would point canonical links at preview hosts.
+ */
+export const siteUrl = new URL(/^https?:\/\//i.test(configured) ? configured : `https://${configured}`);

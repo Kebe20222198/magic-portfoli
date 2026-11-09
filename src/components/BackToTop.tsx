@@ -1,39 +1,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 400);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setVisible(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 10 }}
-          transition={{ duration: 0.25 }}
-          onClick={scrollToTop}
-          className="no-print fixed bottom-8 right-8 z-50 p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl text-text-primary dark:text-white hover:bg-white dark:hover:bg-gray-700 transition-colors"
-          aria-label="Back to top"
-        >
-          <ArrowUp size={18} />
-        </motion.button>
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Revenir en haut de la page"
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      className={cn(
+        "no-print fixed bottom-5 right-5 z-40 flex h-11 w-11 items-center justify-center rounded-[3px] border border-line bg-surface text-muted transition-opacity hover:text-ink",
+        visible ? "opacity-100" : "pointer-events-none opacity-0",
       )}
-    </AnimatePresence>
+    >
+      <ArrowUp size={16} aria-hidden="true" />
+    </button>
   );
 }

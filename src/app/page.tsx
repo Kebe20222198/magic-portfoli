@@ -1,13 +1,27 @@
 import HeroSection from "@/components/HeroSection";
-import NewsSection from "@/components/NewsSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import {
+  AboutSection,
+  ContactSection,
+  EducationSection,
+  ExperienceSection,
+  FieldNotesSection,
+  OtherWorkSection,
+  SkillsSection,
+} from "@/components/HomeSections";
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <NewsSection />
+      <AboutSection />
       <ProjectsSection />
+      <ExperienceSection />
+      <FieldNotesSection />
+      <SkillsSection />
+      <EducationSection />
+      <OtherWorkSection />
+      <ContactSection />
     </>
   );
 }

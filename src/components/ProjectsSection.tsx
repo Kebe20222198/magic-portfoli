@@ -1,132 +1,58 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Image from "next/image";
-import { projects } from "@/data/portfolio";
-import { Github, Globe, Play, ExternalLink } from "lucide-react";
-import SectionHeader from "@/components/SectionHeader";
-import { useState } from "react";
-
-const getIcon = (label: string) => {
-  const l = label.toLowerCase();
-  if (l.includes("github")) return <Github size={13} />;
-  if (l.includes("demo")) return <Play size={13} />;
-  if (l.includes("website") || l.includes("site")) return <Globe size={13} />;
-  return <ExternalLink size={13} />;
-};
-
-// Gradient per project index for visual variety
-const cardAccents = [
-  "from-indigo-500/20 to-purple-500/10",
-  "from-blue-500/20 to-cyan-500/10",
-  "from-emerald-500/20 to-teal-500/10",
-  "from-orange-500/20 to-amber-500/10",
-  "from-rose-500/20 to-pink-500/10",
-  "from-purple-500/20 to-violet-500/10",
-  "from-sky-500/20 to-blue-500/10",
-  "from-lime-500/20 to-green-500/10",
-];
-
-const INITIAL_VISIBLE = 6;
+import type { CSSProperties } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { projects } from "@/data/projects";
+import ProjectGlyph from "@/components/ProjectGlyph";
+import Section from "@/components/Section";
+import { cn } from "@/lib/utils";
 
 export default function ProjectsSection() {
-  const [showAll, setShowAll] = useState(false);
-  const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_VISIBLE);
-
   return (
-    <section id="projects" className="py-24 relative z-10">
-      <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader
-          subtitle="Portfolio"
-          title="Projets"
-          highlightedTitle="sélectionnés"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-          {visibleProjects.map((project, idx) => (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
-              className={`group flex flex-col bg-white dark:bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-stone-200/80 dark:border-white/10 shadow-[0_2px_12px_rgba(0,0,0,0.04)] dark:shadow-none hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:hover:shadow-xl dark:hover:shadow-indigo-900/20 transition-all duration-300 hover:-translate-y-1.5 ${idx < 2 ? "lg:col-span-3" : "lg:col-span-2"}`}
-            >
-              {/* Cover Image */}
-              <div className={`relative w-full overflow-hidden bg-stone-100 dark:bg-white/[0.03] ${idx < 2 ? "aspect-[2/1]" : "aspect-[16/9]"}`}>
-                <Image
-                  src={project.coverImage}
-                  alt={project.title}
-                  fill
-                  className={idx < 2 ? "object-contain p-2" : "object-cover transition-transform duration-500 group-hover:scale-105"}
-                />
-                {/* Overlay gradient */}
-                <div className={`hidden dark:block absolute inset-0 bg-gradient-to-br opacity-80 ${cardAccents[idx % cardAccents.length]}`} />
-              </div>
-
-              {/* Content */}
-              <div className="p-5 flex flex-col flex-1">
-                {idx < 2 && (
-                  <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-300">
-                    Projet majeur
-                  </span>
-                )}
-                <h3 className="text-base font-bold mb-2.5 text-text-primary dark:text-text-primary-dark leading-snug group-hover:text-stone-900 dark:group-hover:text-indigo-400 transition-colors">
-                  {project.title}
-                </h3>
-
-                {/* Badges */}
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {project.badges.map((badge) => (
-                    <span
-                      key={badge}
-                  className="px-2 py-0.5 rounded-full bg-stone-100 dark:bg-indigo-900/30 border border-stone-200 dark:border-indigo-800/50 text-[10px] font-semibold text-stone-600 dark:text-indigo-300 uppercase tracking-wide"
-                    >
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-
-                <p className={`text-text-secondary dark:text-text-secondary-dark leading-relaxed mb-5 flex-1 ${idx < 2 ? "text-sm line-clamp-6" : "text-xs line-clamp-3"}`}>
-                  {project.description}
-                </p>
-
-                {/* Links */}
-                <div className="flex flex-wrap gap-2 pt-3 border-t border-stone-100 dark:border-white/5 mt-auto">
-                  {project.links.map((link) => (
-                    <a
-                      key={link.label}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center gap-1.5 text-[11px] font-semibold text-stone-700 dark:text-indigo-400 bg-stone-100 dark:bg-indigo-900/30 hover:bg-stone-900 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white px-3 py-1.5 rounded-lg transition-all duration-200"
-                    >
-                      {getIcon(link.label)}
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-
-        {projects.length > INITIAL_VISIBLE && !showAll && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-10 flex justify-center"
+    <Section id="projects" index="02" title="Projets principaux" stage>
+      <ol>
+        {projects.map((project, index) => (
+          <li
+            key={project.slug}
+            data-reveal
+            style={{ "--d": "60ms" } as CSSProperties}
+            className="group relative grid gap-8 border-t border-line py-12 md:py-20 lg:grid-cols-12 lg:gap-10"
           >
-            <button
-              onClick={() => setShowAll(true)}
-              className="px-6 py-3 rounded-xl border border-stone-300 dark:border-indigo-700/50 text-stone-900 dark:text-indigo-400 font-semibold text-sm hover:bg-stone-900 hover:text-white dark:hover:bg-indigo-600 dark:hover:text-white transition-all duration-200 hover:shadow-lg hover:shadow-stone-900/10"
-            >
-              Voir tous les projets ({projects.length})
-            </button>
-          </motion.div>
-        )}
-      </div>
-    </section>
+            <div className={cn("lg:col-span-7", index % 2 === 1 && "lg:order-2 lg:col-start-6")}>
+              <p className="eyebrow">
+                {String(index + 1).padStart(2, "0")} · {project.domain}
+              </p>
+              <h3 className="mt-4 font-display text-4xl leading-[1.05] sm:text-5xl lg:text-[3.5rem]">
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="transition-colors duration-300 after:absolute after:inset-0 group-hover:text-accent"
+                >
+                  {project.title}
+                </Link>
+              </h3>
+              <p className="mt-5 max-w-prose text-lg leading-relaxed text-muted">{project.summary}</p>
+              <ul className="mt-6 max-w-prose space-y-2 text-sm">
+                {project.highlights.map((highlight) => (
+                  <li key={highlight} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-[0.6em] h-px w-4 shrink-0 bg-accent" />
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-7 font-mono text-xs leading-relaxed text-muted">{project.stack.join(" · ")}</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium" aria-hidden="true">
+                Lire l&apos;étude de cas
+                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+              </span>
+            </div>
+            <div className={cn("flex items-center justify-center lg:col-span-5", index % 2 === 1 && "lg:order-1 lg:col-start-1")}>
+              <ProjectGlyph
+                slug={project.slug}
+                className="w-full max-w-sm transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }

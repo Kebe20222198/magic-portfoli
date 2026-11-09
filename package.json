@@ -12,16 +12,12 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@tsparticles/react": "^3.0.0",
-    "@tsparticles/slim": "^3.0.0",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.2.6",
     "lucide-react": "^0.379.0",
     "next": "^14.2.35",
     "next-themes": "^0.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "simple-icons": "^11.0.0",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {

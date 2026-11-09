@@ -1,91 +1,38 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import HeroSection from "@/components/HeroSection";
-
-vi.mock("framer-motion", () => ({
-  motion: {
-    div: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <div className={className}>{children}</div>;
-    },
-    p: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <p className={className}>{children}</p>;
-    },
-    h1: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <h1 className={className}>{children}</h1>;
-    },
-    span: ({ children, ...props }: React.PropsWithChildren<Record<string, unknown>>) => {
-      const { className } = props as { className?: string };
-      return <span className={className}>{children}</span>;
-    },
-  },
-  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
-}));
-
-vi.mock("next/image", () => ({
-  default: (props: Record<string, unknown>) => {
-    const { fill, priority, ...rest } = props;
-    return <img {...rest} />;
-  },
-}));
-
-vi.mock("next/link", () => ({
-  default: ({ children, href, ...props }: React.PropsWithChildren<{ href: string }>) => (
-    <a href={href} {...props}>
-      {children}
-    </a>
-  ),
-}));
+import { personalInfo } from "@/data/portfolio";
 
 describe("HeroSection", () => {
-  it("renders the owner's full name", () => {
+  it("renders the name as the page heading", () => {
     render(<HeroSection />);
-    expect(screen.getByText("Mohamed")).toBeInTheDocument();
-    expect(screen.getByText("Kebe")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Mohamed Kebe" })).toBeInTheDocument();
   });
 
-  it("renders the INSEA tag", () => {
+  it("shows school, internship search and location", () => {
     render(<HeroSection />);
-    expect(screen.getByText(/INSEA Rabat/)).toBeInTheDocument();
-  });
-
-  it("renders the location", () => {
-    render(<HeroSection />);
+    expect(screen.getByText(personalInfo.school)).toBeInTheDocument();
+    expect(screen.getByText(/Recherche de stage PFE/)).toBeInTheDocument();
     expect(screen.getByText("Rabat, Maroc")).toBeInTheDocument();
   });
 
-  it("renders social link icons", () => {
+  it("links to the CV page and its PDF", () => {
     render(<HeroSection />);
-    const links = screen.getAllByRole("link");
-    const socialLinks = links.filter((l) => l.getAttribute("target") === "_blank");
-    expect(socialLinks.length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByRole("link", { name: "Consulter le CV" })).toHaveAttribute("href", "/resume");
+    const download = screen.getByRole("link", { name: /Télécharger le PDF/ });
+    expect(download).toHaveAttribute("href", personalInfo.cvFile);
+    expect(download).toHaveAttribute("download");
   });
 
-  it("renders the Resume CTA link", () => {
+  it("links to GitHub, LinkedIn and email", () => {
     render(<HeroSection />);
-    expect(screen.getByText(/voir le resume/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", personalInfo.github);
+    expect(screen.getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", personalInfo.linkedin);
+    expect(screen.getByRole("link", { name: "Email" })).toHaveAttribute("href", `mailto:${personalInfo.email}`);
   });
 
-  it("renders the profile image", () => {
+  it("gives the portrait a text alternative", () => {
     render(<HeroSection />);
-    const img = screen.getByAltText("Mohamed Kebe");
-    expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute("src", "/images/profil.png");
-  });
-
-  it("renders the first bio line immediately", () => {
-    render(<HeroSection />);
-    expect(
-      screen.getByText(/Élève-Ingénieur en Data & IA Engineering/),
-    ).toBeInTheDocument();
-  });
-
-  it("renders the subtitle keywords", () => {
-    render(<HeroSection />);
-    expect(screen.getByText("Data Engineering")).toBeInTheDocument();
-    expect(screen.getByText("Architectures Distribuées")).toBeInTheDocument();
-    expect(screen.getByText("Intelligence Artificielle")).toBeInTheDocument();
+    expect(screen.getByAltText("Portrait de Mohamed Kebe")).toBeInTheDocument();
   });
 });
