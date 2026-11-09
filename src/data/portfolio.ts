@@ -106,12 +106,12 @@ export interface ResumeData {
 // ─── Personal Info ───────────────────────────────────────────────────────────
 export const personalInfo: PersonalInfo = {
   name: "Mohamed Kebe",
-  role: "Élève-Ingénieur | Data Engineering & Systèmes Distribués",
+  role: "Software · Data Engineering · Intelligence Artificielle",
   bio: [
-    "Élève-Ingénieur en Data & IA Engineering à l'INSEA.",
-    "Concepteur d'architectures de données et de pipelines scalables.",
-    "Passionné par les systèmes distribués et le traitement de données temps réel.",
-    "Co-fondateur & Lead Architect de la plateforme Wonkhaï.",
+    "Élève-ingénieur en Data & IA Engineering à l'INSEA, à la croisée du software, de la data et de l'intelligence artificielle.",
+    "Je conçois des applications et des architectures de données, des systèmes distribués aux pipelines analytiques scalables.",
+    "Je développe des solutions en NLP et RAG, et j'explore l'IA agentique pour transformer les besoins métier en workflows intelligents.",
+    "Co-fondateur & Lead Architect de Wonkhaï, où je construis une plateforme multiservices fondée sur des architectures orientées événements.",
   ],
   photoUrls: [
     "/images/profil.png",
